@@ -1,0 +1,22 @@
+name: Generate Diagrams
+on:
+  push:
+    branches:
+      - main
+jobs:
+  generate_plantuml:
+    runs-on: ubuntu-latest
+    name: Export PlantUML diagrams
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Render PlantUML
+        id: plantuml
+        uses: grassedge/generate-plantuml-action@v1.5
+        with:
+          path: docs/assets/diagrams
+          message: "docs: Render PlantUML files"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

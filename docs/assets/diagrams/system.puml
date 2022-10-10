@@ -1,0 +1,37 @@
+@startuml system
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0"
+!include $ICONURL/devicons/nginx.puml
+!include $ICONURL/devicons/python.puml
+!include $ICONURL/devicons/go.puml
+!include $ICONURL/devicons/react.puml
+!include $ICONURL/devicons/postgresql.puml
+
+AddRelTag("async", $lineStyle = DashedLine())
+
+left to right direction
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Usuário", "Usuário que deseja acessar a lista de domínios e a disponibilidade de cada um dos sites")
+
+System_Boundary(checkstatus_govbr, "Checkstatus .gov.br") {
+    Container(nginx, "Web Application", "Nginx", "Entrega o conteúdo estático da aplicação", $sprite = "nginx")
+    Container(frontend, "Single Page Application", "Javascript/React.js", "Disponibiliza a interface com os dados abertos", $sprite = "react")
+
+    Container(nginx_proxy, "Reverse Proxy", "Nginx", "Recebe os pedidos do SPA e envia para aplicação", $sprite = "nginx")
+    Container(api, "API Application", "Python/FastAPI", "Retorna conjunto de dados dos domínios .gov.br", $sprite = "python")
+    ContainerDb(api_db, "API Database", "PostgreSQL", "Armazena os dados dos domínios e histórico da disponibilidade de cada um dos sites", $sprite = "postgresql")
+
+    Container(checkstatus_pipeline, "ETL Pipeline", "Python/Pandas", "Faz a coleta dos domínios em CSV, efetua tratamentos e insere na base", $sprite = "python")
+    Container(checkstatus_bg, "Check status Background", "Golang", "Scheduler que faz o ping em cada um dos sites .gov.br a partir dos domínios salvos na base", $sprite = "go")
+
+    Rel(user, nginx, "Acessa a página com os domínios", "HTTPS")
+    Rel(nginx, frontend, "Entrega ao navegador do cliente", "HTTPS")
+    Rel(frontend, nginx_proxy, "Envia o pedido de dados em", "HTTPS/JSON")
+    Rel(nginx_proxy, api, "Redireciona requisição para a instância disponível", "TCP/Uvicorn")
+    Rel(api, api_db, "Consulta os domínios registrados e o histórico recente da disponibilidade de cada um dos sites", "TCP")
+    Rel(checkstatus_pipeline, api_db, "Efetua a ingestão dos dados dos domínios .gov.br", "TCP")
+    Rel(checkstatus_bg, api_db, "Consulta os domínios para verificar a disponibilidade do site", "TCP")
+}
+
+@enduml

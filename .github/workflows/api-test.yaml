@@ -1,0 +1,71 @@
+name: API Test
+
+on: push
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: Install Deps
+        run: |
+          pip install -U pip
+          pip install poetry
+          poetry install --dev
+        working-directory: api
+        env:
+          POETRY_VIRTUALENVS_CREATE: false
+      - name: Run Black checks
+        run: poetry run black --check .
+        working-directory: api
+      - name: Run Flake8 checks
+        run: poetry run flake8 --count .
+        working-directory: api
+      - name: Run MyPy checks
+        run: poetry run mypy .
+        working-directory: api
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      api-db:
+        image: postgres:alpine3.16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: db_test
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: Install Deps
+        run: |
+          pip install -U pip
+          pip install poetry
+          poetry install --dev
+        working-directory: api
+        env:
+          POETRY_VIRTUALENVS_CREATE: false
+      - name: Execute alembic migrations
+        run: poetry run alembic upgrade head
+        working-directory: api
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
+      - name: Run pytest check
+        run: poetry run pytest -vv --cov="src" .
+        working-directory: api
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"

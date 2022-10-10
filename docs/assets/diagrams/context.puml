@@ -1,0 +1,14 @@
+@startuml context
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+left to right direction
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Usuário", "Usuário do sistema que busca saber os detalhes dos domínios e status do site")
+
+System(checkstatus_govbr, "Checkstatus .gov.br", "Lista todos os domínios .gov.br registrados e a disponibilidade dos sites")
+System_Ext(checkstatus_pipeline, "Checkstatus pipeline", "Pipeline de dados que coleta e faz ingestão dos dados abertos")
+
+Rel(user, checkstatus_govbr, "Acessa página inicial para acessar os domínios .gov.br no")
+Rel(checkstatus_pipeline, checkstatus_govbr, "Coleta os dados abertos dos domínios e faz ingestão de dados no")
+@enduml
