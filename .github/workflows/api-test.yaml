@@ -1,9 +1,10 @@
 name: API CI/CD
 
-on: push
+on: pull_request
 
 jobs:
   linter:
+    name: Mypy, Black and Flake8 Linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,6 +31,7 @@ jobs:
         working-directory: api
 
   test:
+    name: Run Tests
     runs-on: ubuntu-latest
     services:
       api-db:
