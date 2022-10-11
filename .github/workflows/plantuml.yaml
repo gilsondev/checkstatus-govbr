@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "docs/assets/diagrams/**.puml"
+
 jobs:
   generate_plantuml:
     runs-on: ubuntu-latest
