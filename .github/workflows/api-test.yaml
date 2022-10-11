@@ -1,4 +1,4 @@
-name: API Test
+name: API CI/CD
 
 on: push
 
@@ -65,7 +65,7 @@ jobs:
         env:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
       - name: Run pytest check
-        run: poetry run pytest -vv --cov="src" .
+        run: poetry run pytest -vv
         working-directory: api
         env:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
