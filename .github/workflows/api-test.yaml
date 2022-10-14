@@ -65,9 +65,9 @@ jobs:
         run: poetry run alembic upgrade head
         working-directory: api
         env:
-          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
+          TEST_DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
       - name: Run pytest check
         run: poetry run pytest -vv
         working-directory: api
         env:
-          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
+          TEST_DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"

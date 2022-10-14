@@ -2,7 +2,7 @@ version: "3"
 services:
   app:
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
     image: checkstatusgovbr/app
     ports:
@@ -15,10 +15,11 @@ services:
       - db
 
   db:
-    build: postgres
+    build: ./api/postgres
     image: checkstatusgovbr/postgres
     volumes:
       - $HOME/.postgres/checkstatusgovbr/data/postgresql:/var/lib/postgresql/data
+      - ./data:/tmp/data
     ports:
       - 5435:5432
     environment:

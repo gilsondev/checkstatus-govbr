@@ -9,3 +9,15 @@ api-test:
 .PHONY: api-mypy
 api-mypy:
 	@cd ./api && mypy .
+
+.PHONY: api-serve
+api-serve:
+	@uvicorn --app-dir api src.main:app --reload
+
+.PHONY: makemigrations
+makemigrations:
+	@cd api && alembic revision --autogenerate -m "$(msg)"
+
+.PHONY: migrate
+migrate:
+	@cd api && alembic upgrade head
