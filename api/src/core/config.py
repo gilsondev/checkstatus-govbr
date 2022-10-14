@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     VERSION: str = __version__
 
     DATABASE_URL: Union[PostgresDsn, str] = "sqlite:///database.sqlite3"
+    TEST_DATABASE_URL: Union[
+        PostgresDsn, str
+    ] = "postgresql://postgres:postgres@localhost:5435/checkstatusgovbr_test"
 
     class Config:
         env_file = ".env"
@@ -31,6 +34,12 @@ class Settings(BaseSettings):
             "openapi_url": self.OPENAPI_URL,
             "title": self.TITLE,
             "version": self.VERSION,
+            "description": "API REST of project Checkstatus .gov.br",
+            "contact": {
+                "name": "Gilson Filho",
+                "url": "https://gilsondev.in",
+                "email": "me@gilsondev.in",
+            },
         }
 
 

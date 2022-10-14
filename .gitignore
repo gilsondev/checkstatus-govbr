@@ -134,3 +134,7 @@ dmypy.json
 
 # Ignore dynaconf secret files
 .secrets.*
+
+# Dotenv
+.env
+.envrc
