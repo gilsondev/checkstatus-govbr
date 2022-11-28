@@ -67,15 +67,5 @@ def normalize_data(csv_url_path: str) -> pd.DataFrame:
     df = df.pipe(normalize_agent_column)
 
     logger.info("Data normalized")
-    print(
-        df[
-            [
-                "slug",
-                "document_normalized",
-                "organization_normalized",
-                "agent_normalized",
-            ]
-        ].head()
-    )
 
     return df
