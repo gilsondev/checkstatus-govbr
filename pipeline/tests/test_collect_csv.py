@@ -10,7 +10,6 @@ SAMPLE_CSV = Path(__file__).parent.parent / "src/sample_data/domains.csv"
 def test_collect_csv():
     df = prepare_dataset()
 
-    print(df.columns)
     assert df is not None
     columns = df.columns.tolist()
 

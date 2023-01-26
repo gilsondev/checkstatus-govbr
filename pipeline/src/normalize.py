@@ -49,8 +49,6 @@ def normalize_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.pipe(normalize_document_column)
     df = df.pipe(normalize_organization_column)
     df = df.pipe(normalize_agent_column)
-
-    # TODO: Need test
     df = df.pipe(normalize_timestamp_to_datetime)
 
     logger.info("Data normalized")

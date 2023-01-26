@@ -32,7 +32,7 @@ class RDAPDomain:
     def department(self) -> dict:
         department = {}
         department_data = self.data.get("entities", {}).get("technical", [])
-        if department_data:
+        if len(department_data) > 0:
             department_data = department_data[0]
             department = {
                 "name": department_data.get("name"),

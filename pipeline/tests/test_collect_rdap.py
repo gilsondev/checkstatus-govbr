@@ -1,5 +1,6 @@
 from unittest import mock
 
+from src.collect_rdap import insert_rdap_dataframe
 from src.collect_rdap import RDAPDomain
 
 
@@ -40,3 +41,12 @@ def test_rdap_status(mock_whoisit, rdap_response_json):
     rdap = _prepare_mock(mock_whoisit, rdap_response_json)
 
     assert rdap.domain_status == ["active"]
+
+
+def test_insert_rdap_dataframe(raw_domain_df):
+    with mock.patch("src.collect_rdap.whoisit"):
+        result_df = insert_rdap_dataframe(raw_domain_df)
+        assert "nameservers" in result_df.columns.tolist()
+        assert "department" in result_df.columns.tolist()
+        assert "department_email" in result_df.columns.tolist()
+        assert "status" in result_df.columns.tolist()
