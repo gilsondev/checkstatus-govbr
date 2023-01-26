@@ -1,6 +1,9 @@
-name: API CI/CD
+name: Pipelines PR
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - 'pipeline/**'
 
 jobs:
   linter:
@@ -17,36 +20,22 @@ jobs:
           pip install -U pip
           pip install poetry
           poetry install
-        working-directory: api
+        working-directory: pipeline
         env:
           POETRY_VIRTUALENVS_CREATE: false
       - name: Run Black checks
         run: poetry run black --check .
-        working-directory: api
+        working-directory: pipeline
       - name: Run Flake8 checks
         run: poetry run flake8 --count .
-        working-directory: api
+        working-directory: pipeline
       - name: Run MyPy checks
         run: poetry run mypy .
-        working-directory: api
+        working-directory: pipeline
 
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-    services:
-      api-db:
-        image: postgres:alpine3.16
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: db_test
-        options: >-
-          --health-cmd="pg_isready"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-        ports:
-          - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
@@ -58,16 +47,9 @@ jobs:
           pip install -U pip
           pip install poetry
           poetry install
-        working-directory: api
+        working-directory: pipeline
         env:
           POETRY_VIRTUALENVS_CREATE: false
-      - name: Execute alembic migrations
-        run: poetry run alembic upgrade head
-        working-directory: api
-        env:
-          TEST_DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
       - name: Run pytest check
         run: poetry run pytest -vv
-        working-directory: api
-        env:
-          TEST_DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/db_test"
+        working-directory: pipeline
