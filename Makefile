@@ -8,7 +8,7 @@ setup:
 
 .PHONY: api-test
 api-test:
-	@cd ./api && pytest
+	@cd ./api && pytest --cov ./api
 
 .PHONY: api-mypy
 api-mypy:
@@ -28,7 +28,7 @@ migrate:
 
 .PHONY: pipeline-test
 pipeline-test:
-	@cd ./pipeline && pytest
+	@cd ./pipeline && pytest --cov ./pipeline
 
 .PHONY: pipeline-mypy
 pipeline-mypy:

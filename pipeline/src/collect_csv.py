@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pandas as pd
 from loguru import logger
 
@@ -12,8 +10,7 @@ def prepare_dataset() -> pd.DataFrame:
     logger.info("Downloading CSV dataset...")
 
     df = pd.read_csv(
-        # DOMAIN_DATASET_CSV,
-        Path(__file__).parent / "sample_data/domains.csv",
+        DOMAIN_DATASET_CSV,
         names=[
             "domain",
             "organization",
