@@ -3,7 +3,8 @@ from fastapi.testclient import TestClient
 from freezegun import freeze_time
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from src import models, schemas
+from src import models
+from src import schemas
 from src.core.config import settings
 from src.core.database import get_db
 from src.main import app

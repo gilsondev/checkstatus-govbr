@@ -3,7 +3,8 @@ from typing import List
 import pandas as pd
 import whoisit
 from loguru import logger
-from tenacity import retry, stop
+from tenacity import retry
+from tenacity import stop
 
 from .utils import delay_call
 

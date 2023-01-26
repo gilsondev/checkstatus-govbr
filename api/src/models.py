@@ -1,7 +1,10 @@
 from datetime import datetime
 from typing import ClassVar
 
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column
+from sqlalchemy import DateTime
+from sqlalchemy import Integer
+from sqlalchemy import String
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
