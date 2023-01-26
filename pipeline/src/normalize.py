@@ -10,9 +10,6 @@ def _normalize_text(df: pd.DataFrame, column: str) -> pd.DataFrame:
         .str.decode("utf-8")
         .str.lower()
     )
-    df[f"{column}_normalized"] = df[f"{column}_normalized"].replace(
-        to_replace=r"[0-9.\-]", value="", regex=True
-    )
     return df
 
 
@@ -38,33 +35,23 @@ def normalize_agent_column(df: pd.DataFrame) -> pd.DataFrame:
     return _normalize_text(df, "agent")
 
 
-def prepare_dataset(csv_url_path: str) -> pd.DataFrame:
-    df = pd.read_csv(
-        csv_url_path,
-        names=[
-            "domain",
-            "document",
-            "organization",
-            "agent",
-            "registered_at",
-            "refreshed_at",
-        ],
-        skiprows=1,
-        parse_dates=["registered_at", "refreshed_at"],
-    )
+def normalize_timestamp_to_datetime(df: pd.DataFrame) -> pd.DataFrame:
+    df["registered_at"] = pd.to_datetime(df["registered_at"])
+    df["refreshed_at"] = pd.to_datetime(df["refreshed_at"])
+
     return df
 
 
-def normalize_data(csv_url_path: str) -> pd.DataFrame:
-    logger.info("Downloading CSV dataset...")
-
-    df = prepare_dataset(csv_url_path)
-
+def normalize_data(df: pd.DataFrame) -> pd.DataFrame:
     logger.info("Normalizing data")
+
     df = df.pipe(generate_slug_column)
     df = df.pipe(normalize_document_column)
     df = df.pipe(normalize_organization_column)
     df = df.pipe(normalize_agent_column)
+
+    # TODO: Need test
+    df = df.pipe(normalize_timestamp_to_datetime)
 
     logger.info("Data normalized")
 
