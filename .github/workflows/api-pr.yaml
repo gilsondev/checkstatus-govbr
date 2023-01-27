@@ -5,6 +5,9 @@ on:
     paths:
       - 'api/**'
 
+env:
+  DEBUG: true
+
 jobs:
   linter:
     name: Linters
