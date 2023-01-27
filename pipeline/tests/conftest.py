@@ -67,3 +67,25 @@ def rdap_response_json():
     }
 
     yield data
+
+
+@pytest.fixture
+def enrich_domain_df():
+    data = {
+        "domain": ["gdf.gov.br"],
+        "slug": ["gdf"],
+        "document": ["001.175.497/0001-41"],
+        "document_normalized": ["001175497000141"],
+        "organization": ["Agencia Brasileira de Inteligencia"],
+        "organization_normalized": ["agencia brasileira de inteligencia"],
+        "agent": ["Rodrigo Bastos Vasconcelos Teperino"],
+        "agent_normalized": ["rodrigo bastos vasconcelos teperino"],
+        "nameservers": [["dns1.gdfnet.df.gov.br", "dns2.df.gov.br"]],
+        "department": ["Suporte Técnico - CODEPLAN"],
+        "department_normalized": ["suporte tecnico - codeplan"],
+        "departmenet_email": "suporte@gdfnet.df.gov.br",
+        "status": [["active"]],
+        "registered_at": ["11/8/97 11:00"],
+        "refreshed_at": ["6/1/20 17:12"],
+    }
+    yield pd.DataFrame(data=data)
