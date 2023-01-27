@@ -65,7 +65,7 @@ jobs:
         working-directory: api
         env:
           POETRY_VIRTUALENVS_CREATE: false
-          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/pipe_test"
+          TEST_DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/pipe_test"
       - name: Install Deps
         run: |
           pip install -U pip
