@@ -5,6 +5,9 @@ on:
     paths:
       - 'pipeline/**'
 
+env:
+  DEBUG: True
+
 jobs:
   linter:
     name: Mypy, Black and Flake8 Linters
