@@ -1,7 +1,12 @@
 from functools import lru_cache
-from typing import Any, Dict, List, Union
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Union
 
-from pydantic import BaseSettings, PostgresDsn, SecretStr
+from pydantic import BaseSettings
+from pydantic import PostgresDsn
+from pydantic import SecretStr
 from src import __version__
 
 

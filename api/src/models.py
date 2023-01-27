@@ -1,7 +1,11 @@
 from datetime import datetime
 from typing import ClassVar
 
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column
+from sqlalchemy import DateTime
+from sqlalchemy import Integer
+from sqlalchemy import String
+from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -21,7 +25,15 @@ class Domain(BaseModel):
     domain = Column(String(256), nullable=False, unique=True)
     slug = Column(String(100), nullable=False)
     document = Column(String(20))
+    document_normalized = Column(String(20))
     organization = Column(String(256), nullable=False)
+    organization_normalized = Column(String(256), nullable=False)
     agent = Column(String(256))
+    agent_normalized = Column(String(256))
+    nameservers = Column(postgresql.ARRAY(String))
+    department = Column(String(256))
+    department_normalized = Column(String(256))
+    department_email = Column(String(255))
+    status = Column(postgresql.ARRAY(String))
     registered_at = Column(DateTime, nullable=False)
     refreshed_at = Column(DateTime, nullable=False)

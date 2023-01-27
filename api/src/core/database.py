@@ -5,8 +5,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from src.core.config import settings
 
+
 engine = create_engine(
-    settings.DATABASE_URL,
+    settings.DATABASE_URL if not settings.DEBUG else settings.TEST_DATABASE_URL,
     echo=settings.DEBUG,
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
