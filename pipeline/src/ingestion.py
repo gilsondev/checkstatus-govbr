@@ -3,22 +3,12 @@ from typing import List
 
 import pandas as pd
 import psycopg2
-
-CONN_VARIABLES = {
-    "host": os.getenv("DATABASE_HOST", "localhost"),
-    "port": os.getenv("DATABASE_PORT", 5432),
-    "database": os.getenv("DATABASE_NAME", "checkstatusgovbr"),
-    "user": os.getenv("DATABASE_USER", "checkstatus"),
-    "password": os.getenv("DATABASE_PASS", "passw0rd"),
-}
+from psycopg2.extensions import parse_dsn
 
 
-def create_connection(
-    host: str, port: int, database: str, user: str, password: str
-) -> psycopg2.extensions.connection:
-    return psycopg2.connect(
-        host=host, port=port, database=database, user=user, password=password
-    )  # noqa
+def create_connection(uri: str) -> psycopg2.extensions.connection:
+    dsn = parse_dsn(uri)
+    return psycopg2.connect(**dsn)  # noqa
 
 
 def create_cursor(conn: psycopg2.extensions.connection) -> psycopg2.extensions.cursor:
@@ -54,7 +44,8 @@ def upsert(data: List[dict], cursor: psycopg2.extensions.cursor) -> None:
 
 
 def ingestion_data(df: pd.DataFrame) -> None:
-    conn = create_connection(**CONN_VARIABLES)
+    database_url = os.getenv("DATABASE_URL")
+    conn = create_connection(database_url)
     cursor = create_cursor(conn)
 
     upsert(df.to_dict(orient="records"), cursor)  # type: ignore

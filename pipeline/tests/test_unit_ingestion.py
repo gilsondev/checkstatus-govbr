@@ -5,14 +5,8 @@ from src import ingestion
 
 @mock.patch("src.ingestion.psycopg2")
 def test_connection(mock_pg2):
-    kwargs = {
-        "host": "xpto",
-        "port": 1231,
-        "database": "foobar",
-        "user": "foo",
-        "password": "bar",
-    }
-    ingestion.create_connection(**kwargs)
+    uri = "postgresql://someone@example.com/somedb"
+    ingestion.create_connection(uri)
 
     mock_pg2.connect.assert_called()
 

@@ -4,7 +4,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    image: checkstatusgovbr/app
+      target: api
+    image: checkstatusgovbr/api
     ports:
       - "8000:8000"
     environment:
@@ -26,6 +27,56 @@ services:
       - POSTGRES_DBS=checkstatusgovbr, checkstatusgovbr_test
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  dbpipe:
+    build: ./api/postgres
+    image: checkstatusgovbr/postgres-migration
+    ports:
+      - 5436:5432
+    environment:
+      - POSTGRES_DBS=checkstatusgovbr_pipe
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  alembic:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: checkstatusgovbr/db-migration
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@dbpipe:5432/checkstatusgovbr_pipe
+    command: poetry run alembic upgrade head
+    depends_on:
+      - dbpipe
+
+  pipeline:
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+      target: pipeline
+    image: checkstatusgovbr/pipeline
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@dbpipe:5432/checkstatusgovbr_pipe
+    volumes:
+      - ./pipeline:/home/app
+    depends_on:
+      - alembic
+
+  pipeline-test:
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+      target: pipeline-local
+    image: checkstatusgovbr/pipeline
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@dbpipe:5432/checkstatusgovbr_pipe
+    volumes:
+      - ./pipeline:/home/app
+    command: python -m pytest /usr/src/app/tests
+    depends_on:
+      - alembic
 
   plantuml:
     build:

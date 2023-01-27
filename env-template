@@ -1,2 +1,5 @@
 export DEBUG=False
 export DATABASE_URL="postgresql://postgres:postgres@localhost:5435/checkstatusgovbr"
+
+# Development with Macs M1
+# export DOCKER_DEFAULT_PLATFORM=linux/amd64

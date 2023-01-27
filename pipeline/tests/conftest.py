@@ -1,8 +1,32 @@
 import datetime
+import os
 
 import pandas as pd
+import psycopg2
 import pytest
 from dateutil.tz import tzutc
+from psycopg2.extensions import parse_dsn
+
+
+@pytest.fixture(scope="session")
+def connection():
+    dsn = parse_dsn(
+        os.getenv(
+            "DATABASE_URL",
+            "postgresql://postgres:postgres@localhost:5436/checkstatusgovbr_pipe",
+        )
+    )
+    conn = psycopg2.connect(**dsn)  # noqa
+    yield conn
+
+
+@pytest.fixture(scope="session")
+def cursor(connection):
+    cur = connection.cursor()
+    yield cur
+    cur.execute("TRUNCATE domains;")
+    connection.commit()
+    connection.close()
 
 
 @pytest.fixture
