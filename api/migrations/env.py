@@ -27,6 +27,8 @@ target_metadata = models.Base.metadata
 
 
 def get_url() -> str:
+    if settings.DEBUG:
+        return settings.TEST_DATABASE_URL
     return settings.DATABASE_URL
 
 
