@@ -21,21 +21,39 @@ def upsert(data: List[dict], cursor: psycopg2.extensions.cursor) -> None:
         domain,
         slug,
         document,
+        document_normalized,
         organization,
+        organization_normalized,
         agent,
+        agent_normalized,
+        nameservers,
+        department,
+        department_normalized,
+        department_email,
+        status,
         registered_at,
         refreshed_at,
         created_at
     )
     VALUES (
-        %(domain)s, %(slug)s, %(document)s, %(organization)s,
-        %(agent)s, %(registered_at)s, %(refreshed_at)s, NOW()
+        %(domain)s, %(slug)s, %(document)s, %(document_normalized)s,
+        %(organization)s, %(organization_normalized)s, %(agent)s,
+        %(agent_normalized)s, %(nameservers)s, %(department)s,
+        %(department_normalized)s, %(department_email)s, %(status)s,
+        %(registered_at)s, %(refreshed_at)s, NOW()
     )
     ON CONFLICT (domain)
     DO UPDATE SET
         document = EXCLUDED.document,
+        document_normalized = EXCLUDED.document_normalized,
         organization = EXCLUDED.organization,
+        organization_normalized = EXCLUDED.organization_normalized,
         agent = EXCLUDED.agent,
+        agent_normalized = EXCLUDED.agent_normalized,
+        nameservers = EXCLUDED.nameservers,
+        department = EXCLUDED.department,
+        department_normalized = EXCLUDED.department_normalized,
+        status = EXCLUDED.status,
         refreshed_at = EXCLUDED.refreshed_at,
         updated_at = NOW()
     """

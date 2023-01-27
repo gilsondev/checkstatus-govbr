@@ -6,6 +6,7 @@ import psycopg2
 import pytest
 from dateutil.tz import tzutc
 from psycopg2.extensions import parse_dsn
+from psycopg2.extras import RealDictCursor
 
 
 @pytest.fixture(scope="session")
@@ -22,7 +23,7 @@ def connection():
 
 @pytest.fixture(scope="session")
 def cursor(connection):
-    cur = connection.cursor()
+    cur = connection.cursor(cursor_factory=RealDictCursor)
     yield cur
     cur.execute("TRUNCATE domains;")
     connection.commit()
@@ -107,7 +108,7 @@ def enrich_domain_df():
         "nameservers": [["dns1.gdfnet.df.gov.br", "dns2.df.gov.br"]],
         "department": ["Suporte Técnico - CODEPLAN"],
         "department_normalized": ["suporte tecnico - codeplan"],
-        "departmenet_email": "suporte@gdfnet.df.gov.br",
+        "department_email": "suporte@gdfnet.df.gov.br",
         "status": [["active"]],
         "registered_at": ["11/8/97 11:00"],
         "refreshed_at": ["6/1/20 17:12"],
