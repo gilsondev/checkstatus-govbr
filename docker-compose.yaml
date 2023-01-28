@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: checkstatusgovbr/api
     ports:
-      - "8000:80"
+      - "8000:8080"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbr
     volumes:
