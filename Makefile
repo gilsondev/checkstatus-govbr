@@ -28,7 +28,7 @@ migrate:
 
 .PHONY: pipeline-test
 pipeline-test:
-	@cd ./pipeline && pytest --cov ./pipeline
+	@cd ./pipeline && PYTHONPATH=src python -m pytest --cov ./pipeline
 
 .PHONY: pipeline-mypy
 pipeline-mypy:
