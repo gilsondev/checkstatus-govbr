@@ -16,7 +16,6 @@ jobs:
     steps:
           - uses: actions/checkout@v2
           - uses: superfly/flyctl-actions/setup-flyctl@master
-          - run: flyctl deploy --remote-only
           - run: "fly proxy 5432:5432 -a checkstatusgovbr"
             env:
               FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
