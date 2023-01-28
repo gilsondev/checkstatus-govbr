@@ -1,4 +1,4 @@
-FROM python:3.10.9-bullseye AS api-base
+FROM python:3.10.9-bullseye
 
 ENV PYTHONUNBUFFERED=true
 ENV POETRY_HOME=/opt/poetry
@@ -9,12 +9,11 @@ RUN apt install -y build-essential libpq-dev python3-dev && rm -rf /etc/apt/sour
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
-RUN poetry config virtualenvs.create false --local
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-RUN poetry install
 
-FROM api-base AS api
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-interaction --no-root
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["poetry", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8080"]

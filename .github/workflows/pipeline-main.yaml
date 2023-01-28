@@ -1,6 +1,7 @@
 name: Pipeline Domain Data Ingestion
 
 on:
+  workflow_dispatch:
   schedule:
   - cron: '0 22 * * *' # At 22:00.
 
