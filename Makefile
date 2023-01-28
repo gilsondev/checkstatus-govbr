@@ -27,7 +27,7 @@ migrate:
 	@cd api && alembic upgrade head
 
 .PHONY: pipeline-test
-pipeline-test:
+pipeline-test: migrate
 	@cd ./pipeline && PYTHONPATH=src python -m pytest --cov ./pipeline
 
 .PHONY: pipeline-mypy

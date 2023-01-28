@@ -24,17 +24,7 @@ services:
     ports:
       - 5435:5432
     environment:
-      - POSTGRES_DBS=checkstatusgovbr, checkstatusgovbr_test
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-
-  dbpipe:
-    build: ./api/postgres
-    image: checkstatusgovbr/postgres-migration
-    ports:
-      - 5436:5432
-    environment:
-      - POSTGRES_DBS=checkstatusgovbr_pipe
+      - POSTGRES_DBS=checkstatusgovbr, checkstatusgovbrtest
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
@@ -46,12 +36,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@dbpipe:5432/checkstatusgovbr_pipe
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbrtest
     volumes:
       - ./api/migrations:/usr/src/app/migrations
     command: poetry run alembic upgrade head
     depends_on:
-      - dbpipe
+      - db
 
   pipeline:
     build:
@@ -60,9 +50,9 @@ services:
       target: pipeline
     image: checkstatusgovbr/pipeline
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@dbpipe:5432/checkstatusgovbr_pipe
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbr
     volumes:
-      - ./pipeline:/home/app
+      - ./pipeline:/usr/src/app/pipeline
     depends_on:
       - alembic
 
@@ -73,10 +63,10 @@ services:
       target: pipeline-local
     image: checkstatusgovbr/pipeline
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@dbpipe:5432/checkstatusgovbr_pipe
+      - TEST_DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbrtest
     volumes:
-      - ./pipeline:/home/app
-    command: python -m pytest /usr/src/app/tests
+      - ./pipeline:/usr/src/app/pipeline
+    command: poetry run pytest ./pipeline/tests
     depends_on:
       - alembic
 

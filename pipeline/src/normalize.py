@@ -37,7 +37,9 @@ def normalize_agent_column(df: pd.DataFrame) -> pd.DataFrame:
 
 # TODO: Need test
 def normalize_department_column(df: pd.DataFrame) -> pd.DataFrame:
-    return _normalize_text(df, "department")
+    if "department" in df.columns:
+        df = _normalize_text(df, "department")
+    return df
 
 
 def normalize_timestamp_to_datetime(df: pd.DataFrame) -> pd.DataFrame:
