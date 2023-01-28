@@ -76,5 +76,5 @@ jobs:
         run: python -m pytest -vv
         working-directory: pipeline
         env:
-          PYTHONPATH: src
+          PYTHONPATH: "$PYTHONPATH:src"
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/pipe_test"
