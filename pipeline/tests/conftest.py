@@ -13,8 +13,8 @@ from psycopg2.extras import RealDictCursor
 def connection():
     dsn = parse_dsn(
         os.getenv(
-            "DATABASE_URL",
-            "postgresql://postgres:postgres@localhost:5436/checkstatusgovbr_pipe",
+            "TEST_DATABASE_URL",
+            "postgresql://postgres:postgres@localhost:5432/checkstatusgovbrtest",
         )
     )
     conn = psycopg2.connect(**dsn)  # noqa

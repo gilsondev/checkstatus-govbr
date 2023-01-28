@@ -33,11 +33,8 @@ def test_ingestion_data(mock_upsert, mock_cursor, mock_conn, enrich_domain_df):
 
 
 def test_upsert(enrich_domain_df):
-    with mock.patch("src.ingestion.create_connection"):
-        data_dict = enrich_domain_df.to_dict(orient="records")
+    data_dict = enrich_domain_df.to_dict(orient="records")
+    cursor_instance = mock.Mock()
 
-        cursor_instance = mock.Mock()
-
-        ingestion.upsert(data_dict, cursor_instance)
-
-        cursor_instance.executemany.assert_called()
+    ingestion.upsert(data_dict, cursor_instance)
+    cursor_instance.executemany.assert_called()

@@ -5,8 +5,7 @@ import whoisit
 from loguru import logger
 from tenacity import retry
 from tenacity import stop
-
-from .utils import delay_call
+from utils import delay_call
 
 
 class RDAPDomain:
