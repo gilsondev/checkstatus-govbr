@@ -35,6 +35,11 @@ def normalize_agent_column(df: pd.DataFrame) -> pd.DataFrame:
     return _normalize_text(df, "agent")
 
 
+# TODO: Need test
+def normalize_department_column(df: pd.DataFrame) -> pd.DataFrame:
+    return _normalize_text(df, "department")
+
+
 def normalize_timestamp_to_datetime(df: pd.DataFrame) -> pd.DataFrame:
     df["registered_at"] = pd.to_datetime(df["registered_at"])
     df["refreshed_at"] = pd.to_datetime(df["refreshed_at"])
@@ -48,6 +53,7 @@ def normalize_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.pipe(generate_slug_column)
     df = df.pipe(normalize_document_column)
     df = df.pipe(normalize_organization_column)
+    df = df.pipe(normalize_department_column)
     df = df.pipe(normalize_agent_column)
     df = df.pipe(normalize_timestamp_to_datetime)
 
