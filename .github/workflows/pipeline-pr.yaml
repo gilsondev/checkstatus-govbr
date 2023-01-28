@@ -73,8 +73,7 @@ jobs:
           poetry install
         working-directory: pipeline
       - name: Run pytest check
-        run: python -m pytest -vv
+        run: PYTHONPATH=$PYTHONPATH:src python -m pytest -vv
         working-directory: pipeline
         env:
-          PYTHONPATH: "$PYTHONPATH:src"
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/pipe_test"
