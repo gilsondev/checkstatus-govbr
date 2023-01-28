@@ -14,11 +14,12 @@ jobs:
     name: Run Database Migrations
     runs-on: ubuntu-latest
     steps:
+          - uses: actions/checkout@v2
           - uses: superfly/flyctl-actions/setup-flyctl@master
+          - run: flyctl deploy --remote-only
           - run: "fly proxy 5432:5432 -a checkstatusgovbr"
             env:
               FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          - uses: actions/checkout@v2
           - name: Set up Python
             uses: actions/setup-python@v2
             with:
