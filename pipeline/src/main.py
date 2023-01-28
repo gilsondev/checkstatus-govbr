@@ -5,7 +5,6 @@ from normalize import normalize_data
 
 if __name__ == "__main__":
     df = prepare_dataset()
-    teste_df = df.head()
-    df = collect_domain_rdap_data(teste_df)
+    df = collect_domain_rdap_data(df)
     df = normalize_data(df)  # type: ignore
     ingestion_data(df)
