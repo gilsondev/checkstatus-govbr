@@ -1,7 +1,9 @@
-from typing import List
+from typing import Any
 
 from fastapi import APIRouter
 from fastapi import Depends
+from fastapi_pagination import Page
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
 from src import __version__
 from src.core.config import settings
@@ -13,15 +15,15 @@ router = APIRouter(tags=["domains"])
 
 
 @router.get("/", summary="Return metadata of application")
-def index():
+def index() -> Any:
     return {"app": settings.TITLE, "version": __version__}
 
 
 @router.get(
     "/domains",
-    response_model=List[DomainItem],
+    response_model=Page[DomainItem],
     summary="Fetch all domains data",
     description="Get list of domains data related by opendata repository",
 )
-def fetch_domains(db: Session = Depends(get_db)):
-    return DomainService(db).get_all()
+def fetch_domains(db: Session = Depends(get_db)) -> Any:
+    return paginate(DomainService(db).fetch())

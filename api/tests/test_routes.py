@@ -17,4 +17,10 @@ def test_domains_endpoint(client, single_domain_schema):
     resp = client.get("/domains")
 
     assert resp.status_code == 200
-    assert resp.json() == [json.loads(single_domain_schema.json())]
+    assert resp.json() == {
+        "items": [json.loads(single_domain_schema.json())],
+        "total": 1,
+        "page": 1,
+        "pages": 1,
+        "size": 50,
+    }

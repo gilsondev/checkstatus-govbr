@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 from src.core.config import settings
 from src.routes import router as core_router
 
@@ -16,6 +17,9 @@ def get_application() -> FastAPI:
     )
 
     application.include_router(core_router)
+
+    # Configure fastapi pagination
+    add_pagination(application)
 
     return application
 
