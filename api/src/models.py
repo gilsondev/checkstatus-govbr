@@ -1,17 +1,20 @@
 from datetime import datetime
 from typing import ClassVar
+from typing import TypeAlias
 
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base  # type: ignore
 
-Base = declarative_base()
+
+Base: TypeAlias = declarative_base()  # type: ignore
 
 
 class BaseModel(Base):
+    Alias = Base
     __abstract__: ClassVar[bool] = True
 
     id = Column(Integer, primary_key=True, index=True)
