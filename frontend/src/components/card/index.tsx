@@ -1,6 +1,6 @@
 "use client";
 
-import { Domain } from "@/types";
+import { Domain } from "@/utils/types";
 import React from "react";
 
 interface CardProps {
@@ -32,11 +32,11 @@ const Card = ({ domain }: CardProps) => {
         </span>
         <span className="text-sm text-gray-500">
           <strong>Registrado: </strong>{" "}
-          {new Date(domain.registered_at).toLocaleDateString()}
+          {new Date(domain.registered_at).toLocaleDateString("pt-BR")}
         </span>
         <span className="text-sm text-gray-500">
           <strong>Última renovação: </strong>{" "}
-          {new Date(domain.updated_at).toLocaleDateString()}
+          {new Date(domain.updated_at).toLocaleDateString("pt-BR")}
         </span>
       </div>
     </a>
