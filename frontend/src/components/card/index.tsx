@@ -1,6 +1,7 @@
 "use client";
 
 import { Domain } from "@/utils/types";
+import Link from "next/link";
 import React from "react";
 
 interface CardProps {
@@ -9,14 +10,12 @@ interface CardProps {
 
 const Card = ({ domain }: CardProps) => {
   return (
-    <a
-      href={`http://${domain.domain}`}
-      target="_blank"
-      className="w-full lg:my-4 lg:px-4 max-w-sm p-6 bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50"
-    >
-      <h5 className="mb-2 text-xl w-full md:text-2xl font-bold tracking-tight text-blue-950">
-        {domain.domain}
-      </h5>
+    <div className="w-full lg:my-4 lg:px-4 max-w-sm p-6 bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">
+      <Link href={`http://${domain.domain}`} target="_blank">
+        <h5 className="mb-2 text-xl w-full md:text-2xl font-bold tracking-tight text-blue-950 hover:text-blue-500">
+          {domain.domain}
+        </h5>
+      </Link>
       <div className="flex flex-col gap-2 mt-4">
         <span className="text-sm text-gray-500">
           <strong>Organização: </strong>
@@ -39,7 +38,7 @@ const Card = ({ domain }: CardProps) => {
           {new Date(domain.updated_at).toLocaleDateString("pt-BR")}
         </span>
       </div>
-    </a>
+    </div>
   );
 };
 

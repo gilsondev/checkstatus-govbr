@@ -43,8 +43,8 @@ const InputSearch = () => {
             ref={searchInputRef}
             onChange={(e) => searchDomains(e.target.value)}
             id="default-search"
-            className="block w-full p-4 pl-10 text-md text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Pesquisar por domínio"
+            className="block w-full p-4 pl-10 text-sm md:text-md text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Busque domínio ou organização"
             required
           />
         </div>
