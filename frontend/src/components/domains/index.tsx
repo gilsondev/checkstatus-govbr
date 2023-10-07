@@ -36,13 +36,13 @@ const Domains = () => {
   return (
     !isLoading && (
       <main className="grid sm:grid-cols-2 md:grid-cols-1 gap-x-3" id="domains">
-        <div className="px-5 md:px-5 lg:px-16 flex flex-wrap justify-center gap-3">
+        <div className="px-5 pt-5 md:px-5 lg:px-16 flex flex-wrap justify-center gap-3">
           {domains.items?.map((domain) => (
             <Card key={domain.slug} domain={domain} />
           ))}
         </div>
 
-        <div className="flex justify-center mb-5">
+        <div className="flex justify-center py-5">
           <button
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
