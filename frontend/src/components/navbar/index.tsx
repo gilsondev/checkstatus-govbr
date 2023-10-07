@@ -1,21 +1,27 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import { BsGithub } from "react-icons/bs";
 
 const Navbar = () => {
   return (
-    <nav className="md:flex gap-2 md:gap-5 lg:gap-10 items-center">
-      <h1 className="text-center text-xl md:block md:text-2xl lg:text-3xl font-medium text-blue-950">
-        Checkstatus gov.br
-      </h1>
-      <ul className="hidden md:flex gap-2 md:gap-6 mt-1 font-medium md:text-lg">
+    <nav className="md:flex gap-2 md:gap-5 lg:gap-10 justify-between items-center">
+      <Link href="/" className="flex justify-center md:block">
+        <Image
+          src="/logo.png"
+          width={250}
+          height={50}
+          alt="Checkstatus gov.br"
+        />
+      </Link>
+      <ul className="hidden md:flex gap-2 md:gap-6 mt-1">
         <li>
-          <a href="/" className="hover:text-blue-900">
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="/" className="hover:text-blue-900">
-            Sobre
-          </a>
+          <Link
+            href="https://github.com/gilsondev/checkstatus-govbr"
+            target="_blank"
+          >
+            <BsGithub size={24} className="text-blue-950 hover:text-blue-700" />
+          </Link>
         </li>
       </ul>
     </nav>
