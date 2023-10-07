@@ -18,7 +18,7 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "build": "next build --output public",
+    "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
