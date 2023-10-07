@@ -5,6 +5,8 @@ import { DomainsResponse } from "@/types";
 import { Suspense } from "react";
 import Skeleton from "./skeleton";
 
+export const revalidate = 0;
+
 interface HomeProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
