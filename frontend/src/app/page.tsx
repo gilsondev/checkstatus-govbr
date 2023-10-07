@@ -5,7 +5,6 @@ import { DomainsResponse } from "@/types";
 import { Suspense } from "react";
 import Skeleton from "./skeleton";
 
-
 interface HomeProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
@@ -32,7 +31,10 @@ async function getData(
   size: number = Number(process.env.PAGINATION_SIZE)
 ): Promise<DomainsResponse> {
   const res = await fetch(
-    `${process.env.CHECKSTATUS_API_URL}/domains?page=${page}&size=${size}`
+    `${process.env.CHECKSTATUS_API_URL}/domains?page=${page}&size=${size}`,
+    {
+      cache: "no-store",
+    }
   );
 
   return res.json();
