@@ -24,3 +24,31 @@ def test_domains_endpoint(client, single_domain_schema):
         "pages": 1,
         "size": 50,
     }
+
+
+@freeze_time("2022-10-14 14:00:00")
+def test_search_domains_endpoint(client, single_domain_schema):
+    resp = client.get("/domains?search=gdf")
+
+    assert resp.status_code == 200
+    assert resp.json() == {
+        "items": [json.loads(single_domain_schema.json())],
+        "total": 1,
+        "page": 1,
+        "pages": 1,
+        "size": 50,
+    }
+
+
+@freeze_time("2022-10-14 14:00:00")
+def test_search_unknown_domain(client, single_domain_schema):
+    resp = client.get("/domains?search=nonexist")
+
+    assert resp.status_code == 200
+    assert resp.json() == {
+        "items": [],
+        "total": 0,
+        "page": 1,
+        "pages": 0,
+        "size": 50,
+    }

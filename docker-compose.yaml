@@ -17,15 +17,15 @@ services:
   db:
     build: ./api/postgres
     image: checkstatusgovbr/postgres
-    volumes:
-      - $HOME/.postgres/checkstatusgovbr/data/postgresql:/var/lib/postgresql/data
-      - ./data:/tmp/data
     ports:
       - 5435:5432
     environment:
       - POSTGRES_DBS=checkstatusgovbr, checkstatusgovbrtest
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - db_tmp:/tmp/data
 
   alembic:
     build:
@@ -76,3 +76,7 @@ services:
     container_name: plantuml_cli
     volumes:
       - ./docs/assets:/usr/docs/assets
+
+volumes:
+  db_data:
+  db_tmp:
