@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy.orm import Query
 from sqlalchemy.orm import Session
 from src.models import Domain
@@ -7,7 +9,7 @@ class DomainService:
     def __init__(self, db: Session) -> None:
         self.db = db
 
-    def fetch(self, search: str = "") -> Query:
+    def fetch(self, search: Optional[str] = "") -> Query:
         query = self.db.query(Domain)
 
         if not search:
