@@ -1,6 +1,6 @@
 "use client";
 
-import { Domain } from "@/types";
+import { Domain } from "@/utils/types";
 import React from "react";
 
 interface CardProps {

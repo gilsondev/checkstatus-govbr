@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
+import { DomainContext } from "@/app/context";
 import React from "react";
 
 const InputSearch = () => {
   const searchInputRef = React.useRef<HTMLInputElement>(null);
+  const { searchDomains } = React.useContext(DomainContext);
 
   React.useEffect(() => {
     if (searchInputRef.current) {
@@ -40,22 +41,12 @@ const InputSearch = () => {
             type="search"
             name="search"
             ref={searchInputRef}
+            onChange={(e) => searchDomains(e.target.value)}
             id="default-search"
             className="block w-full p-4 pl-10 text-md text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Pesquisar por domínio"
             required
           />
-          <Link
-            href={{
-              pathname: "/domains",
-              query: {
-                search: searchInputRef.current?.value,
-              },
-            }}
-            className="hidden md:block text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-          >
-            Buscar
-          </Link>
         </div>
       </form>
     </div>
