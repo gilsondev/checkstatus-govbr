@@ -1,6 +1,8 @@
 import Header from "@/components/header";
 import Domains from "@/components/domains";
 import { DomainsResponse } from "@/types";
+import { Suspense } from "react";
+import Skeleton from "./skeleton";
 
 interface HomeProps {
   searchParams: {
@@ -16,7 +18,9 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <>
       <Header />
-      <Domains {...domains} />
+      <Suspense fallback={<Skeleton />}>
+        <Domains {...domains} />
+      </Suspense>
     </>
   );
 }
