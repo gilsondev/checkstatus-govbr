@@ -1,3 +1,5 @@
+"use client";
+
 import Card from "../card";
 import { Domain } from "@/types";
 import Link from "next/link";

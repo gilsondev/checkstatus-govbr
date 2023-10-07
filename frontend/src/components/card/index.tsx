@@ -1,3 +1,5 @@
+"use client";
+
 import { Domain } from "@/types";
 import React from "react";
 
