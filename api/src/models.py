@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import ClassVar
 from typing import TypeAlias
 
+from sqlalchemy import Boolean
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 from sqlalchemy import Integer
@@ -38,5 +39,6 @@ class Domain(BaseModel):
     department_normalized = Column(String(256))
     department_email = Column(String(255))
     status = Column(postgresql.ARRAY(String))
+    available = Column(Boolean, nullable=False, default=False)
     registered_at = Column(DateTime, nullable=False)
     refreshed_at = Column(DateTime, nullable=False)

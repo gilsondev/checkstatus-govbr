@@ -62,6 +62,7 @@ def domain_raw():
         "department_normalized": "suporte tecnico - codeplan",
         "department_email": "suporte@gdfnet.df.gov.br",
         "status": ["active"],
+        "available": True,
         "registered_at": "2006-09-26T17:47:00.000",
         "refreshed_at": "2021-06-23T17:09:00.000",
         "created_at": "2022-05-01T15:00:00.000",

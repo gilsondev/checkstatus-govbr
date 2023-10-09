@@ -13,6 +13,7 @@ def test_domain_item_schema(domain_raw):
         "agent",
         "registered_at",
         "refreshed_at",
+        "available",
         "created_at",
         "updated_at",
     } == domain.__fields__.keys()

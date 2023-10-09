@@ -3,7 +3,7 @@ name: Pipelines PR
 on:
   pull_request:
     paths:
-      - 'pipeline/**'
+      - "./pipeline/**"
 
 env:
   DEBUG: true

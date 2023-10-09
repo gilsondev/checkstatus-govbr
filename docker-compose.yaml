@@ -35,6 +35,34 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - DEBUG=False
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbr
+    volumes:
+      - ./api/migrations:/usr/src/app/migrations
+    command: poetry run alembic upgrade head
+    depends_on:
+      - db
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - CHECKSTATUS_API_URL=http://api:8000
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - app
+
+  alembic-test:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: checkstatusgovbr/db-migration
+    ports:
+      - "8000:8000"
+    environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbrtest
     volumes:
       - ./api/migrations:/usr/src/app/migrations

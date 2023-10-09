@@ -7,9 +7,10 @@ def _normalize_text(df: pd.DataFrame, column: str) -> pd.DataFrame:
         df[column]
         .str.normalize("NFKD")
         .str.encode("ascii", errors="ignore")
-        .str.decode("utf-8")
+        .str.decode("utf8")
         .str.lower()
     )
+
     return df
 
 

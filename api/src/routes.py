@@ -26,5 +26,7 @@ def index() -> Any:
     summary="Fetch all domains data",
     description="Get list of domains data related by opendata repository",
 )
-def fetch_domains(db: Session = Depends(get_db), search: Optional[str] = None) -> Any:
+def fetch_domains(
+    db: Session = Depends(get_db), search: Optional[str] = None
+) -> Any:  # noqa
     return paginate(DomainService(db).fetch(search=search))

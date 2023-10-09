@@ -3,7 +3,7 @@ name: API PR
 on:
   pull_request:
     paths:
-      - 'api/**'
+      - "./api/**"
 
 env:
   DEBUG: true
