@@ -33,3 +33,7 @@ pipeline-test: migrate
 .PHONY: pipeline-mypy
 pipeline-mypy:
 	@cd ./pipeline && mypy .
+
+.PHONY: scheduler-test
+scheduler-test: migrate
+	@cd ./scheduler && PYTHONPATH=../ python -m pytest --cov ./scheduler

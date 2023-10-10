@@ -2,8 +2,13 @@ name: Scheduler Domain
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scheduler/**"
   schedule:
-    - cron: "0 22 1 * *" # At 22:00 on day-of-month 1.
+    - cron: "0 22 * * *" # At 22:00.
 
 env:
   DEBUG: false
@@ -35,7 +40,7 @@ jobs:
 
   ingestion:
     needs: migrate
-    name: Run Data Ingestion
+    name: Run Scheduler
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
