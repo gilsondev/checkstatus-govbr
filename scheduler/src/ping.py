@@ -1,9 +1,9 @@
-import pandas as pd
 import requests
 from loguru import logger
 from psycopg2.extensions import cursor
 from requests import exceptions
 
+from lib.database import fetch_domains
 from lib.database import insert_domain_availability
 
 
@@ -16,11 +16,14 @@ def check_availability(domain: str) -> bool:
         return False
 
 
-def ping_domains(df: pd.DataFrame, cursor: cursor) -> bool:
-    dataset = df.to_dict(orient="records")
+def ping_domains(cursor: cursor) -> bool:
+    dataset = fetch_domains(["domain", "available"])
+    domains_status = []
 
     for data in dataset:
-        result = check_availability(data["domain"])
-        logger.info(f"Availability of Domain {data['domain']}: {result}")
+        result = check_availability(data.domain)
+        logger.info(f"Availability of Domain {data.domain}: {result}")
+        domains_status.append({"domain": data.domain, "available": result})
 
-        insert_domain_availability(data["domain"], result, cursor)
+    logger.info(f"Inserting {len(domains_status)} domains status")
+    insert_domain_availability(domains_status, cursor)

@@ -1,10 +1,12 @@
 import os
+from collections import namedtuple
 from typing import List
 
 import psycopg2
 from psycopg2.extensions import connection
 from psycopg2.extensions import cursor
 from psycopg2.extensions import parse_dsn
+from psycopg2.extras import execute_batch
 
 
 def create_connection() -> connection:
@@ -18,13 +20,15 @@ def create_cursor(conn: connection) -> cursor:
 
 
 def fetch_domains(fields: List[str]) -> List[dict]:
+    domain = namedtuple("Domain", fields)
     query = f"""
     SELECT {",".join(fields)} FROM domains;
     """
     cursor = create_cursor(create_connection())
     cursor.execute(query)
 
-    return cursor.fetchall()
+    result = cursor.fetchall()
+    return [domain(*row) for row in result]
 
 
 def upsert(data: List[dict], cursor: cursor) -> None:
@@ -83,3 +87,11 @@ def insert_domain_availability(
     """
 
     cursor.execute(query, {"domain": domain, "available": available})
+
+
+def insert_domain_availability(dataset: List[dict], cursor: cursor) -> None:  # noqa
+    query = """
+    UPDATE domains SET available = %(available)s WHERE domain = %(domain)s
+    """
+
+    execute_batch(cursor, query, dataset)
