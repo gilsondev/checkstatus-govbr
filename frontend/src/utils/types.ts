@@ -8,6 +8,7 @@ export type Domain = {
   agent: string;
   registered_at: string;
   refreshed_at: string;
+  available: boolean;
 };
 
 export type DomainsResponse = {

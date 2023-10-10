@@ -16,6 +16,17 @@ const Card = ({ domain }: CardProps) => {
           {domain.domain}
         </h5>
       </Link>
+      <div>
+        {domain.available ? (
+          <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+            Disponível
+          </span>
+        ) : (
+          <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+            Indisponível
+          </span>
+        )}
+      </div>
       <div className="flex flex-col gap-2 mt-4">
         <span className="text-sm text-gray-500">
           <strong>Organização: </strong>
