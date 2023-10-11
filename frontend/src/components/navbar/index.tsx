@@ -6,7 +6,11 @@ import { BsGithub } from "react-icons/bs";
 const Navbar = () => {
   return (
     <nav className="md:flex gap-2 md:gap-5 lg:gap-10 justify-between items-center">
-      <Link href="/" className="flex justify-center md:block">
+      <Link
+        href="/"
+        className="flex justify-center md:block"
+        aria-label="Página inicial"
+      >
         <Image
           src="/logo.svg"
           width={250}
@@ -19,6 +23,7 @@ const Navbar = () => {
           <Link
             href="https://github.com/gilsondev/checkstatus-govbr"
             target="_blank"
+            aria-label="Repositório do projeto"
           >
             <BsGithub size={24} className="text-blue-950 hover:text-blue-700" />
           </Link>
