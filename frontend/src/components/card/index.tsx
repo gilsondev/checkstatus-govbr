@@ -15,17 +15,17 @@ const Card = ({ domain }: CardProps) => {
     {
       condition: isAvailable && isActive,
       className: "bg-green-100 text-green-800",
-      text: "Disponível",
+      text: "Site Disponível",
     },
     {
       condition: !isAvailable && isActive,
       className: "bg-yellow-100 text-yellow-800",
-      text: "Indisponível",
+      text: "Site Indisponível",
     },
     {
       condition: !isAvailable && !isActive,
       className: "bg-red-100 text-red-800",
-      text: "Cancelado",
+      text: "Domínio Cancelado",
     },
   ];
 
