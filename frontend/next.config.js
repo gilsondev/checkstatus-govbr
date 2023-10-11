@@ -17,7 +17,7 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
     org: "gilson-filho",
-    project: "checkstatusgovbr",
+    project: "javascript-nextjs",
     url: "https://gilson-filho.sentry.io/"
   },
   {
