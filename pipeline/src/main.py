@@ -1,5 +1,3 @@
-import os
-
 import sentry_sdk
 from collect_csv import prepare_dataset
 from collect_rdap import collect_domain_rdap_data
@@ -10,7 +8,7 @@ from lib.database import create_connection
 from lib.database import create_cursor
 
 sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DSN"),
+    dsn="https://011f53de8eea0a53cb44e163d0453eb5@o4506032925900800.ingest.sentry.io/4506032926031872",
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
