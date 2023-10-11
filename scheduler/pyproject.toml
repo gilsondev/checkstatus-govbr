@@ -11,6 +11,7 @@ psycopg2-binary = "^2.9.4"
 whoisit = "^2.6.5"
 tenacity = "^8.1.0"
 pandas = "^1.5.0"
+sentry-sdk = "^1.32.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.10.0"
