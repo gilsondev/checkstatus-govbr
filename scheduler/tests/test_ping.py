@@ -1,6 +1,9 @@
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
+import pytest
+from requests import exceptions
+from src.ping import check_availability
 from src.ping import ping_domains
 
 
@@ -69,3 +72,39 @@ def test_ping_domains_with_exception(
 
     # Asserting that the exception was caught and logged
     mock_insert_domain_availability.assert_not_called()
+
+
+@patch("requests.head")
+@pytest.mark.parametrize(
+    "status_code, expected_result",
+    [
+        (200, True),
+        (302, True),
+        (404, False),
+        (500, False),
+        (503, False),
+    ],
+)
+def test_check_availability_returns_expected_result(
+    mock_head, status_code, expected_result
+):
+    mock_head.return_value.status_code = status_code
+    result = check_availability("example.com")
+
+    assert result == expected_result
+
+
+@patch("requests.head")
+def test_check_availability_returns_false_for_connection_error(mock_head):
+    mock_head.side_effect = exceptions.ConnectionError("Connection error")
+    result = check_availability("example.com")
+
+    assert result is False
+
+
+@patch("requests.head")
+def test_check_availability_returns_false_for_timeout_error(mock_head):
+    mock_head.side_effect = exceptions.Timeout("Timeout error")
+    result = check_availability("example.com")
+
+    assert result is False
