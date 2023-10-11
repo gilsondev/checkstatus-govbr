@@ -38,9 +38,9 @@ jobs:
           POETRY_VIRTUALENVS_CREATE: false
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-  ingestion:
+  scheduler:
     needs: migrate
-    name: Run Scheduler
+    name: Run Scheduler Tasks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
