@@ -80,9 +80,7 @@ def upsert(data: List[dict], cursor: cursor) -> None:
 
 
 def update(dataset: List[dict], fields: List[str], cursor) -> None:
-    fields_to_update = ", ".join(
-        [f"{field} = %({field})s" for field in fields if field != "domain"]
-    )
+    fields_to_update = ", ".join([f"{field} = %({field})s" for field in fields if field != "domain"])
 
     query = f"UPDATE domains SET {fields_to_update} WHERE domain = %(domain)s"
 
@@ -94,6 +92,6 @@ def insert_domain_availability(dataset: List[dict], cursor: cursor) -> None:
 
 
 def update_domain_status(dataset: List[dict], cursor: cursor) -> None:
-    query = "UPDATE domains SET status = ARRAY['canceled'] WHERE domain = %(domain)s"  # noqa
+    query = "UPDATE domains SET status = ARRAY['canceled'], available = false WHERE domain = %(domain)s"  # noqa
 
     execute_batch(cursor, query, dataset)
