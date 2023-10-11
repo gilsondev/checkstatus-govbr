@@ -67,6 +67,7 @@ jobs:
         working-directory: api
         env:
           POETRY_VIRTUALENVS_CREATE: false
+          SENTRY_DSN: "http://localhost:9888"
       - name: Execute alembic migrations
         run: poetry run alembic upgrade head
         working-directory: api
