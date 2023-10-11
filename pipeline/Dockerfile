@@ -3,6 +3,7 @@ FROM python:3.10.9-bullseye AS pipeline-base
 ENV PYTHONUNBUFFERED=true
 ENV POETRY_HOME=/opt/poetry
 ENV PATH="$POETRY_HOME/bin:$PATH"
+ENV SENTRY_DSN=
 
 RUN apt update && apt upgrade -y
 RUN apt install -y build-essential libpq-dev python3-dev && rm -rf /etc/apt/source/lists/*

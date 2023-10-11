@@ -57,4 +57,5 @@ jobs:
         env:
           POETRY_VIRTUALENVS_CREATE: false
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           PYTHONPATH: ../
