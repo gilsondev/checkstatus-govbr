@@ -9,6 +9,7 @@ export type Domain = {
   registered_at: string;
   refreshed_at: string;
   available: boolean;
+  status: string[];
 };
 
 export type DomainsResponse = {

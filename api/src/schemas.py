@@ -23,6 +23,7 @@ class DomainItem(BaseSchema):
     refreshed_at: datetime = Field(
         description="Datetime of domain was refreshed to this organization"
     )
+    status: list = Field(description="Status of domain", default=["active"])
 
     class Config:
         orm_mode = True
