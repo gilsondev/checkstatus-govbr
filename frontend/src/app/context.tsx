@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 import { DomainsResponse } from "../utils/types";
-import { getData } from "../utils";
+import { getData, searchData } from "../utils";
 
 export type DomainContextType = {
   getDomains: (page: number) => void;
@@ -19,7 +19,7 @@ const defaultDomainsValue = {
 };
 
 export const DomainContext = createContext<DomainContextType>({
-  getDomains: () => {},
+  getDomains: (page = 1) => {},
   searchDomains: () => {},
   setLoading: () => {},
   isLoading: true,
@@ -41,7 +41,7 @@ const DomainProvider = ({ children }: { children: React.ReactNode }) => {
 
   const searchDomains = async (search: string) => {
     setLoading(true);
-    const response = await getData(1, search);
+    const response = await searchData(search);
 
     setDomains(response);
     setLoading(false);

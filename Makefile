@@ -37,3 +37,7 @@ pipeline-mypy:
 .PHONY: scheduler-test
 scheduler-test: migrate
 	@cd ./scheduler &&  python -m pytest --cov ./scheduler
+
+.PHONY: web-serve
+web-serve:
+	@cd ./frontend && yarn dev

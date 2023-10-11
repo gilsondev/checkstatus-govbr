@@ -4,12 +4,9 @@ import Skeleton from "@/app/skeleton";
 import Card from "../card";
 import React from "react";
 import { DomainContext, DomainContextType } from "@/app/context";
-import { DomainsResponse } from "@/utils/types";
 import clsx from "clsx";
 
 const Domains = () => {
-  const [page, setPage] = React.useState<number>(1);
-
   const { getDomains, domains, isLoading } =
     React.useContext<DomainContextType>(DomainContext);
 

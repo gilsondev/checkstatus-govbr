@@ -2,9 +2,21 @@
 
 import { DomainContext } from "@/app/context";
 import React from "react";
+import { useDebounce } from "usehooks-ts";
 
 const InputSearch = () => {
   const { searchDomains } = React.useContext(DomainContext);
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const debounceValue = useDebounce<string>(searchTerm, 500);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+  };
+
+  React.useEffect(() => {
+    searchDomains(searchTerm);
+  }, [debounceValue]); // eslint-disable-line
 
   return (
     <div className="mt-10 w-full lg:w-1/2 text-center">
@@ -33,7 +45,7 @@ const InputSearch = () => {
           <input
             type="search"
             name="search"
-            onChange={(e) => searchDomains(e.target.value)}
+            onChange={handleChange}
             id="default-search"
             className="block w-full p-4 pl-10 text-sm md:text-md text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Busque domínio ou organização"
