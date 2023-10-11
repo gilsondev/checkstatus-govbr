@@ -14,7 +14,7 @@ const Domains = () => {
     return <Skeleton />;
   }
 
-  if (!isLoading && domains.items.length === 0) {
+  if (!isLoading && domains.items?.length === 0) {
     return (
       <div>
         <h2 className="p-4 md:p-14 text-xl md:text-2xl lg:text-3xl text-gray-700 text-center">
