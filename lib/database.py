@@ -22,7 +22,7 @@ def create_cursor(conn: connection) -> cursor:
 def fetch_domains(fields: List[str]) -> List[dict]:
     domain = namedtuple("Domain", fields)
     query = f"""
-    SELECT {",".join(fields)} FROM domains;
+    SELECT {",".join(fields)} FROM domains WHERE NOT status = ARRAY['canceled'];
     """
     cursor = create_cursor(create_connection())
     cursor.execute(query)
