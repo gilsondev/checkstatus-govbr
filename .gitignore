@@ -137,3 +137,6 @@ dmypy.json
 # Dotenv
 .env
 .envrc
+
+# Other stuffs
+.DS_Store
