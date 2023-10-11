@@ -74,7 +74,7 @@ const Card = ({ domain }: CardProps) => {
         </span>
         <span className="text-sm text-gray-500">
           <strong>Última renovação: </strong>{" "}
-          {new Date(domain.updated_at).toLocaleDateString("pt-BR")}
+          {new Date(domain.refreshed_at).toLocaleDateString("pt-BR")}
         </span>
       </div>
     </div>
