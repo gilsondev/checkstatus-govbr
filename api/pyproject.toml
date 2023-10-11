@@ -14,6 +14,7 @@ requests = "^2.28.1"
 psycopg2-binary = "^2.9.4"
 sqlalchemy-utils = "^0.39.0"
 fastapi-pagination = "^0.11.3"
+sentry-sdk = {extras = ["fastapi"], version = "^1.32.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"

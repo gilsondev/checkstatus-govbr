@@ -76,4 +76,5 @@ jobs:
         run: poetry run pytest -vv
         working-directory: pipeline
         env:
+          PYTHONPATH: ../
           TEST_DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/pipe_test"

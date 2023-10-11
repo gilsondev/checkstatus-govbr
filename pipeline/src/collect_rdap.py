@@ -16,10 +16,14 @@ class RDAPDomain:
             whoisit.bootstrap()
 
     def fetch_data(self, domain: str) -> None:
-        time.sleep(random.randint(3, 15))  # sleep aleatório de 3 a 15 segundos
+        try:
+            time.sleep(random.randint(3, 15))  # sleep aleatório de 3 a 15 segundos
 
-        logger.info(f"Fetching RDAP data from domain {domain}.")
-        self.data = whoisit.domain(domain)
+            logger.info(f"Fetching RDAP data from domain {domain}.")
+            self.data = whoisit.domain(domain)
+            logger.info(f"RDAP data fetched for domain {domain}.")
+        except whoisit.errors.QueryError as e:
+            logger.error(f"Error fetching RDAP data for domain {domain}: {e}")
 
     @property
     def nameservers(self) -> List[str]:
