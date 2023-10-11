@@ -4,14 +4,7 @@ import { DomainContext } from "@/app/context";
 import React from "react";
 
 const InputSearch = () => {
-  const searchInputRef = React.useRef<HTMLInputElement>(null);
   const { searchDomains } = React.useContext(DomainContext);
-
-  React.useEffect(() => {
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  });
 
   return (
     <div className="mt-10 w-full lg:w-1/2 text-center">
@@ -40,7 +33,6 @@ const InputSearch = () => {
           <input
             type="search"
             name="search"
-            ref={searchInputRef}
             onChange={(e) => searchDomains(e.target.value)}
             id="default-search"
             className="block w-full p-4 pl-10 text-sm md:text-md text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
