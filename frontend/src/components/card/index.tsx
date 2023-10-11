@@ -47,9 +47,9 @@ const Card = ({ domain }: CardProps) => {
         </Link>
       )}
       {!isActive && (
-        <h5 className="mb-2 text-xl w-full md:text-2xl font-bold tracking-tight text-gray-500 ">
+        <h3 className="mb-2 text-xl w-full md:text-2xl font-bold tracking-tight text-gray-500 ">
           {domain.domain}
-        </h5>
+        </h3>
       )}
       <div>
         {availabilityDetails.map((detail, index) =>
