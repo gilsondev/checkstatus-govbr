@@ -1,4 +1,3 @@
-import concurrent.futures
 import random
 import time
 from typing import List
@@ -18,8 +17,8 @@ class RDAPDomain:
     def fetch_data(self, domain: str) -> None:
         try:
             time.sleep(random.randint(3, 15))  # sleep aleatório de 3 a 15 segundos
-
             logger.info(f"Fetching RDAP data from domain {domain}.")
+
             self.data = whoisit.domain(domain)
             logger.info(f"RDAP data fetched for domain {domain}.")
         except whoisit.errors.QueryError as e:
@@ -47,21 +46,16 @@ class RDAPDomain:
         return self.data.get("status", [])
 
 
-def insert_rdap_dataframe(row: dict) -> dict:
+def insert_rdap_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     rdap = RDAPDomain()
-    rdap.fetch_data(row["domain"])
-    row["nameservers"] = rdap.nameservers
+    rdap.fetch_data(df["domain"])
+    df["nameservers"] = rdap.nameservers
+    df["department"] = rdap.department.get("name")
+    df["department_email"] = rdap.department.get("email")
+    df["status"] = rdap.domain_status
 
-    department = rdap.department
-    row["department"] = department.get("name")
-    row["department_email"] = department.get("email")
-    row["status"] = rdap.domain_status
-
-    return row
+    return df
 
 
-def collect_domain_rdap_data(df: pd.DataFrame) -> pd.DataFrame:
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = executor.map(insert_rdap_dataframe, df.to_dict("records"))
-
-    return pd.DataFrame(results)
+def collect_domain_rdap_data(df: pd.DataFrame) -> pd.DataFrame | pd.Series:
+    return df.apply(insert_rdap_dataframe, axis=1)
