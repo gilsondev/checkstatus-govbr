@@ -41,7 +41,7 @@ const Domains = () => {
             className={clsx(
               "flex items-center justify-center px-4 h-10 text-base font-medium",
               domains.page <= 1 && "opacity-30",
-              "text-blue-950 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+              "text-blue-950 bg-white border border-gray-300 rounded-lg enabled:hover:bg-gray-100 enabled:hover:text-gray-700"
             )}
           >
             Anterior

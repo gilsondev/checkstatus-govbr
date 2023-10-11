@@ -2,11 +2,14 @@ import GAnalytics from "@/components/ganalytics";
 import * as Sentry from "@sentry/nextjs";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
 Sentry.setTag("app", "Checkstatus Frontend");
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const font = Open_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Checkstatus gov.br",
@@ -59,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.className} bg-gray-200 grid grid-cols-1 items-center px-5 md:px-16 pt-8`}
+        className={`${font.className} bg-zinc-50 grid grid-cols-1 items-center px-5 md:px-16 pt-8`}
       >
         <GAnalytics />
         {children}
