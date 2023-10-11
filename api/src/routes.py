@@ -29,4 +29,8 @@ def index() -> Any:
 def fetch_domains(
     db: Session = Depends(get_db), search: Optional[str] = None
 ) -> Any:  # noqa
-    return paginate(DomainService(db).fetch(search=search))
+
+    if search:
+        return paginate(DomainService(db).search(search=search))
+
+    return paginate(DomainService(db).fetch())
