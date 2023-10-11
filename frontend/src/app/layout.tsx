@@ -1,7 +1,10 @@
 import GAnalytics from "@/components/ganalytics";
+import * as Sentry from "@sentry/nextjs";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+
+Sentry.setTag("app", "Checkstatus Frontend");
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 

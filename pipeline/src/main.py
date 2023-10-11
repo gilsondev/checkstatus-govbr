@@ -3,6 +3,7 @@ from collect_csv import prepare_dataset
 from collect_rdap import collect_domain_rdap_data
 from ingestion import ingestion_data
 from normalize import normalize_data
+from sentry_sdk import set_tag
 
 from lib.database import create_connection
 from lib.database import create_cursor
@@ -14,6 +15,7 @@ sentry_sdk.init(
     # We recommend adjusting this value in production.
     traces_sample_rate=1.0,
 )
+set_tag("app", "Checkstatus Pipeline")
 
 if __name__ == "__main__":
     conn = create_connection()
