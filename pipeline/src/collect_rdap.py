@@ -43,9 +43,9 @@ class RDAPDomain:
         return self.data.get("status", [])
 
 
-def insert_rdap_dataframe(row: pd.Series) -> pd.Series:
+def insert_rdap_dataframe(row: dict) -> dict:
     rdap = RDAPDomain()
-    rdap.fetch_data(row.domain)
+    rdap.fetch_data(row["domain"])
     row["nameservers"] = rdap.nameservers
 
     department = rdap.department
@@ -58,6 +58,6 @@ def insert_rdap_dataframe(row: pd.Series) -> pd.Series:
 
 def collect_domain_rdap_data(df: pd.DataFrame) -> pd.DataFrame:
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = executor.map(insert_rdap_dataframe, df.itertuples(index=False))
+        results = executor.map(insert_rdap_dataframe, df.to_dict("records"))
 
     return pd.DataFrame(results)

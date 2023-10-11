@@ -47,7 +47,6 @@ def upsert(data: List[dict], cursor: cursor) -> None:
         department_normalized,
         department_email,
         status,
-        available,
         registered_at,
         refreshed_at,
         created_at
@@ -57,7 +56,7 @@ def upsert(data: List[dict], cursor: cursor) -> None:
         %(organization)s, %(organization_normalized)s, %(agent)s,
         %(agent_normalized)s, %(nameservers)s, %(department)s,
         %(department_normalized)s, %(department_email)s, %(status)s,
-        false, %(registered_at)s, %(refreshed_at)s, NOW()
+        %(registered_at)s, %(refreshed_at)s, NOW()
     )
     ON CONFLICT (domain)
     DO UPDATE SET
@@ -71,7 +70,6 @@ def upsert(data: List[dict], cursor: cursor) -> None:
         department = EXCLUDED.department,
         department_normalized = EXCLUDED.department_normalized,
         status = EXCLUDED.status,
-        available = EXCLUDED.available,
         refreshed_at = EXCLUDED.refreshed_at,
         updated_at = NOW()
     """
