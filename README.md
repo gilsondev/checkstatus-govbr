@@ -2,6 +2,8 @@
 
 Este projeto foi criado com o objetivo de trazer todos os domínios .gov.br registrados para acompanhar a sua situação e também verificar se os sites estão disponíveis.
 
+![Screenshot](./docs/assets/screenshot.png)
+
 ### Tecnologias utilizadas
 
 - Python
