@@ -16,7 +16,7 @@ class RDAPDomain:
             whoisit.bootstrap()
 
     def fetch_data(self, domain: str) -> None:
-        time.sleep(random.randint(1, 5))  # sleep aleatório de 1 a 5 segundos
+        time.sleep(random.randint(3, 15))  # sleep aleatório de 3 a 15 segundos
 
         logger.info(f"Fetching RDAP data from domain {domain}.")
         self.data = whoisit.domain(domain)
