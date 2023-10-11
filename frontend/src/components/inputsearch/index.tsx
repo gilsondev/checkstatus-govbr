@@ -15,7 +15,9 @@ const InputSearch = () => {
   };
 
   React.useEffect(() => {
-    searchDomains(searchTerm);
+    if (searchTerm) {
+      searchDomains(searchTerm);
+    }
   }, [debounceValue]); // eslint-disable-line
 
   return (

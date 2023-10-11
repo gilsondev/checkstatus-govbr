@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav className="md:flex gap-2 md:gap-5 lg:gap-10 justify-between items-center">
       <Link href="/" className="flex justify-center md:block">
         <Image
-          src="/logo.png"
+          src="/logo.svg"
           width={250}
           height={50}
           alt="Checkstatus gov.br"

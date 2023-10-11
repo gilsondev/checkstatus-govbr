@@ -6,25 +6,28 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Checkstatus gov.br",
-  description: "Tenha acesso atualizado aos dados abertos de todos os endereços .gov.br registrados para acesso a sites e plataformas do governo",
+  description:
+    "Tenha acesso atualizado aos dados abertos de todos os endereços .gov.br registrados para acesso a sites e plataformas do governo",
   metadataBase: new URL("https://checkstatus.gilsondev.in"),
   openGraph: {
     type: "website",
     title: "Checkstatus gov.br",
     siteName: "Checkstatus gov.br",
-    description: "Tenha acesso atualizado aos dados abertos de todos os endereços .gov.br registrados para acesso a sites e plataformas do governo",
+    description:
+      "Tenha acesso atualizado aos dados abertos de todos os endereços .gov.br registrados para acesso a sites e plataformas do governo",
+    url: "https://checkstatus.gilsondev.in",
     images: [
       {
-        url: "./logo.png",
+        url: "./opengraph_image.svg",
         width: 800,
         height: 600,
-        type: "image/png",
+        type: "image/svg",
       },
       {
-        url: "./logo.png",
+        url: "./opengraph_image.svg",
         width: 1800,
         height: 1600,
-        type: "image/png",
+        type: "image/svg",
       },
     ],
     locale: "pt_BR",
