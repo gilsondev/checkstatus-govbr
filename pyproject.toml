@@ -1,3 +1,9 @@
+[tool.poetry]
+name = "checkstatusgovbr"
+version = "0.1.0"
+description = "ETL Pipeline of project Checkstatus .gov.br"
+authors = ["Gilson Filho <me@gilsondev.in>"]
+
 [tool.isort]
 profile = "black"
 src_paths = ["src", "tests"]
@@ -27,3 +33,7 @@ disallow_untyped_defs = true
 ignore_missing_imports = true
 plugins = ["sqlalchemy.ext.mypy.plugin"]
 exclude = ["^tests/$", "^migrations/$"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
