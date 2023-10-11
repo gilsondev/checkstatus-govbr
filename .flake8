@@ -1,38 +1,3 @@
-[tool:pytest]
-testpaths = "tests"
-pythonpath = src
-addopts =
-  --strict-markers
-  --tb=short
-  --cov=src
-  --cov-branch
-  --cov-report=term-missing
-  --cov-report=html
-  --cov-report=xml
-  --no-cov-on-fail
-  --cov-fail-under=90
-
-
-[coverage:report]
-precision = 2
-exclude_lines =
-    pragma: no cover
-    raise NotImplementedError
-    raise NotImplemented
-
-[coverage:run]
-source = src
-branch = True
-omit =
- src/main.py
-
-[isort]
-profile = "black"
-src_paths =
-  "src",
-  "tests"
-combine_as_imports = true
-
 [flake8]
 max-line-length = 120
 exclude =
@@ -63,5 +28,3 @@ extend-ignore = E203,W503
 no-accept-encodings = True
 nested-classes-whitelist=Config
 inline-quotes = double
-
-[mypy]

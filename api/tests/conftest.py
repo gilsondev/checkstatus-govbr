@@ -19,7 +19,14 @@ def engine():
 def database(engine):
     models.Base.metadata.create_all(engine)
     yield engine
-    models.Base.metadata.drop_all(engine)
+
+    with engine.connect() as conn:
+        result = conn.execute(
+            "SELECT tablename FROM pg_tables WHERE schemaname='public'"
+        )
+        tables = [row[0] for row in result]
+        for table in tables:
+            conn.execute(f"DROP TABLE IF EXISTS {table} CASCADE")
 
 
 @pytest.fixture(scope="function")

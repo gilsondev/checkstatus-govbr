@@ -9,6 +9,13 @@ from psycopg2.extensions import parse_dsn
 from psycopg2.extras import RealDictCursor
 
 
+def _drop_all_tables(cursor):
+    cursor.execute("SELECT tablename FROM pg_tables WHERE schemaname='public';")
+    tables = [table["tablename"] for table in cursor.fetchall()]
+    for table in tables:
+        cursor.execute(f"DROP TABLE IF EXISTS {table} CASCADE;")
+
+
 @pytest.fixture(scope="session")
 def connection():
     dsn = parse_dsn(
@@ -24,8 +31,10 @@ def connection():
 @pytest.fixture(scope="session")
 def cursor(connection):
     cur = connection.cursor(cursor_factory=RealDictCursor)
+
     yield cur
-    cur.execute("TRUNCATE domains;")
+
+    _drop_all_tables(cur)
     connection.commit()
     connection.close()
 

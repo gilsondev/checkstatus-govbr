@@ -1,3 +1,4 @@
+from cancelled_domains import update_domains as update_cancelled_domains
 from ping import ping_domains
 
 from lib.database import create_connection
@@ -8,6 +9,7 @@ if __name__ == "__main__":
     cursor = create_cursor(conn)
 
     ping_domains(cursor)
+    update_cancelled_domains(cursor)
 
     conn.commit()
     conn.close()

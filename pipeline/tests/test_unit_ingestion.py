@@ -34,10 +34,12 @@ def test_cursor():
 @pytest.mark.skip("Mock not called for no reason")
 def test_ingestion_data(mock_upsert, mock_cursor, mock_conn, enrich_domain_df):
 
-    ingestion.ingestion_data(enrich_domain_df, mock_cursor())
-    data_dict = enrich_domain_df.to_dict(orient="records")
+    mock_cursor_instance = mock_cursor.return_value
 
-    mock_upsert.assert_called_with(data_dict, mock_cursor())
+    ingestion.ingestion_data(enrich_domain_df, mock_cursor_instance)
+
+    data_dict = enrich_domain_df.to_dict(orient="records")
+    mock_upsert.assert_called_with(data_dict, mock_cursor_instance)
 
 
 def test_upsert(enrich_domain_df):

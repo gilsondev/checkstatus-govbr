@@ -1,27 +1,25 @@
+import concurrent.futures
+import random
+import time
 from typing import List
 
 import pandas as pd
 import whoisit
 from loguru import logger
-from tenacity import retry
-from tenacity import stop
-from utils import delay_call
 
 
 class RDAPDomain:
-    def __init__(self, domain: str) -> None:
-        self.domain = domain
+    def __init__(self) -> None:
         self.data = dict()
 
         if not whoisit.is_bootstrapped():
             whoisit.bootstrap()
-        self._fetch_data()
 
-    @retry(stop=stop.stop_after_attempt(7))
-    @delay_call(min=2, max=10)
-    def _fetch_data(self) -> None:
-        logger.info(f"Fetching RDAP data from domain {self.domain}.")
-        self.data = whoisit.domain(self.domain)
+    def fetch_data(self, domain: str) -> None:
+        time.sleep(random.randint(1, 5))  # sleep aleatório de 1 a 5 segundos
+
+        logger.info(f"Fetching RDAP data from domain {domain}.")
+        self.data = whoisit.domain(domain)
 
     @property
     def nameservers(self) -> List[str]:
@@ -45,15 +43,21 @@ class RDAPDomain:
         return self.data.get("status", [])
 
 
-def insert_rdap_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    rdap = RDAPDomain(domain=df["domain"])
-    df["nameservers"] = rdap.nameservers
-    df["department"] = rdap.department.get("name")
-    df["department_email"] = rdap.department.get("email")
-    df["status"] = rdap.domain_status
+def insert_rdap_dataframe(row: pd.Series) -> pd.Series:
+    rdap = RDAPDomain()
+    rdap.fetch_data(row.domain)
+    row["nameservers"] = rdap.nameservers
 
-    return df
+    department = rdap.department
+    row["department"] = department.get("name")
+    row["department_email"] = department.get("email")
+    row["status"] = rdap.domain_status
+
+    return row
 
 
-def collect_domain_rdap_data(df: pd.DataFrame) -> pd.DataFrame | pd.Series:
-    return df.apply(insert_rdap_dataframe, axis=1)
+def collect_domain_rdap_data(df: pd.DataFrame) -> pd.DataFrame:
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        results = executor.map(insert_rdap_dataframe, df.itertuples(index=False))
+
+    return pd.DataFrame(results)

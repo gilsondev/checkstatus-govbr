@@ -1,0 +1,29 @@
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests"]
+combine_as_imports = true
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+
+[tool.pytest.ini_options]
+testpaths = ["api", "pipeline"]
+rootdir = "./"
+addopts = [
+    "--strict-markers",
+    "--tb=short",
+    "--cov=.",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--no-cov-on-fail",
+    "--cov-fail-under=90",
+]
+
+[tool.mypy]
+disallow_untyped_defs = true
+ignore_missing_imports = true
+plugins = ["sqlalchemy.ext.mypy.plugin"]
+exclude = ["^tests/$", "^migrations/$"]

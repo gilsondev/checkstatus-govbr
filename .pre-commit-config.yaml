@@ -37,10 +37,5 @@ repos:
     rev: "3.9.2"
     hooks:
       - id: flake8
-        name: 'API Flake8'
         language_version: python3
-        args: [--config, ./api/setup.cfg]
-      - id: flake8
-        name: 'Pipeline Flake8'
-        language_version: python3
-        args: [--config, ./pipeline/setup.cfg]
+        args: [--config, .flake8]

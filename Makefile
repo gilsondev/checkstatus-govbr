@@ -7,7 +7,7 @@ setup:
 	@pip install pre-commit
 
 .PHONY: api-test
-api-test:
+api-test: migrate
 	@cd ./api && pytest --cov ./api
 
 .PHONY: api-mypy
@@ -24,11 +24,11 @@ makemigrations:
 
 .PHONY: migrate
 migrate:
-	@cd api && alembic upgrade head
+	@cd api && DEBUG=True alembic upgrade head && DEBUG=False alembic upgrade head
 
 .PHONY: pipeline-test
 pipeline-test: migrate
-	@cd ./pipeline && PYTHONPATH=../ python -m pytest --cov ./pipeline
+	@cd ./pipeline && python -m pytest --cov ./ --import-mode=importlib
 
 .PHONY: pipeline-mypy
 pipeline-mypy:
@@ -36,4 +36,4 @@ pipeline-mypy:
 
 .PHONY: scheduler-test
 scheduler-test: migrate
-	@cd ./scheduler && PYTHONPATH=../ python -m pytest --cov ./scheduler
+	@cd ./scheduler &&  python -m pytest --cov ./scheduler
