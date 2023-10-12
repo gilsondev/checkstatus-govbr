@@ -1,6 +1,5 @@
-"use client";
-
 import { Domain } from "@/utils/types";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -37,8 +36,25 @@ const Card = ({ domain }: CardProps) => {
     },
   ];
 
+  const homapageImage = (domain: Domain) => {
+    const domainFilename = domain.domain.replace(/\./g, "_");
+    const homepageImagesCDN = process.env.NEXT_PUBLIC_HOMEPAGE_IMAGES_CDN;
+
+    return `${homepageImagesCDN}/homepages/10_2023/${domainFilename}.jpg`;
+  };
+
   return (
-    <div className="w-full lg:my-4 lg:px-4 max-w-sm p-6 bg-white border border-gray-200 rounded-md shadow hover:bg-gray-50">
+    <div className="w-full lg:my-4 lg:px-4 max-w-sm p-6 bg-neutral-100 border border-zync-300 rounded-md hover:bg-zync-100">
+      <div className="mb-5 bg-neutral-50 rounded-md">
+        <Image
+          src={homapageImage(domain)}
+          alt={domain.domain}
+          width={350}
+          height={197}
+          className="rounded-md w[350px] h-[197px]"
+          style={{ objectFit: "contain" }}
+        />
+      </div>
       {isActive && (
         <Link href={`http://${domain.domain}`} target="_blank">
           <h3 className="mb-2 text-xl w-full md:text-2xl font-bold tracking-tight text-blue-950 hover:text-blue-500">

@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "checkstatusgovbr.s3.sa-east-1.amazonaws.com",
+        port: "",
+      },
+    ],
+  },
+};
 
 module.exports = nextConfig;
 
