@@ -4,7 +4,6 @@
 
 !includeurl ICONURL/devicons/nginx.puml
 !includeurl ICONURL/devicons/python.puml
-!includeurl ICONURL/devicons/nodejs.puml
 !includeurl ICONURL/devicons2/nextjs_original.puml
 !includeurl ICONURL/devicons/postgresql.puml
 
@@ -24,7 +23,7 @@ System_Boundary(checkstatus_govbr, "Checkstatus .gov.br") {
     ContainerDb(api_db, "API Database", "PostgreSQL", "Armazena os dados dos domínios e histórico da disponibilidade de cada um dos sites", $sprite = "postgresql")
 
     Container(checkstatus_pipeline, "ETL Pipeline", "Python/Pandas", "Faz a coleta dos domínios em CSV, efetua tratamentos e insere na base", $sprite = "python")
-    Container(checkstatus_bg, "Check status Background", "Typescript", "Scheduler que faz o ping em cada um dos sites .gov.br a partir dos domínios salvos na base", $sprite = "nodejs")
+    Container(checkstatus_bg, "Check status Background", "Python", "Scheduler que faz o ping em cada um dos sites .gov.br a partir dos domínios salvos na base", $sprite = "python")
 
     Rel(user, nginx, "Acessa a página com os domínios", "HTTPS")
     Rel(nginx, frontend, "Entrega ao navegador do cliente", "HTTPS")
