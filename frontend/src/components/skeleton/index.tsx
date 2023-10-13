@@ -1,7 +1,10 @@
 const Skeleton = () => {
   return (
     <>
-      <main className="grid sm:grid-cols-2 md:grid-cols-1 gap-x-3" id="domains">
+      <main
+        className="grid sm:grid-cols-2 md:grid-cols-1 gap-x-3 mt-5"
+        id="domains"
+      >
         <div className="px-5 md:px-5 lg:px-16 flex flex-wrap justify-center gap-3">
           {[...Array(6)].map((_, index) => (
             <div

@@ -8,8 +8,11 @@ export const getData = async (page: number = 1): Promise<DomainsResponse> => {
   return res.json();
 };
 
-export const searchData = async (search: string): Promise<DomainsResponse> => {
-  const res = await fetch(`/api?search=${search}`, {
+export const searchData = async (
+  search: string,
+  page: number = 1
+): Promise<DomainsResponse> => {
+  const res = await fetch(`/api?search=${search}&page=${page}`, {
     cache: "no-store",
   });
 
