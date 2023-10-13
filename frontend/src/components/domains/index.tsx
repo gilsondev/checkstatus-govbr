@@ -1,14 +1,30 @@
 "use client";
 
-import Skeleton from "@/app/skeleton";
+import { useSearchParams } from "next/navigation";
+import Skeleton from "@/components/skeleton";
 import Card from "../card";
-import React from "react";
+import React, { useEffect } from "react";
 import { DomainContext, DomainContextType } from "@/app/context";
-import clsx from "clsx";
+import Pagination from "../pagination";
+import DomainsFilter from "../domains-header";
 
 const Domains = () => {
-  const { getDomains, domains, isLoading } =
+  const params = useSearchParams();
+  const actualPageNumber = params.get("page") || 1;
+  const search = params.get("search") || "";
+  const { domains, isLoading, setPage, setSearchTerm, searchTerm } =
     React.useContext<DomainContextType>(DomainContext);
+
+  useEffect(() => {
+    setPage(Number(actualPageNumber));
+  }, [actualPageNumber]); // eslint-disable-line
+
+  useEffect(() => {
+    if (search) {
+      setPage(Number(actualPageNumber));
+      setSearchTerm(search);
+    }
+  }, [search, actualPageNumber]); // eslint-disable-line
 
   if (isLoading) {
     return <Skeleton />;
@@ -26,34 +42,19 @@ const Domains = () => {
 
   return (
     !isLoading && (
-      <main className="grid sm:grid-cols-2 md:grid-cols-1 gap-x-3" id="domains">
-        <div className="px-5 pt-5 md:px-5 lg:px-16 flex flex-wrap justify-center gap-3">
+      <main
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-x-3"
+        id="domains"
+      >
+        <DomainsFilter domains={domains} />
+        <div className="lg:my-2 lg:px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
           {domains?.items?.map((domain) => (
             <Card key={domain.slug} domain={domain} />
           ))}
         </div>
 
-        <div className="flex justify-center py-5">
-          <button
-            disabled={domains.page === 1}
-            onClick={() => getDomains(domains.page - 1)}
-            // className="flex items-center justify-center px-4 h-10 text-base font-medium text-blue-950 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-            className={clsx(
-              "flex items-center justify-center px-4 h-10 text-base font-medium",
-              domains.page <= 1 && "opacity-30",
-              "text-blue-950 bg-white border border-gray-300 rounded-lg enabled:hover:bg-gray-100 enabled:hover:text-gray-700"
-            )}
-          >
-            Anterior
-          </button>
-
-          <button
-            onClick={() => getDomains(domains.page + 1)}
-            disabled={domains.page === domains.pages}
-            className="flex items-center justify-center px-4 h-10 ml-3 text-base font-medium text-blue-950 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-          >
-            Próximo
-          </button>
+        <div className="flex justify-center px-2 md:px-0 py-5">
+          <Pagination page={domains.page} totalPages={domains.pages} />
         </div>
       </main>
     )

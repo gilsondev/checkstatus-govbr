@@ -44,7 +44,7 @@ const Card = ({ domain }: CardProps) => {
   };
 
   return (
-    <div className="w-full lg:my-4 lg:px-4 max-w-sm p-6 bg-neutral-100 border border-zync-300 rounded-md hover:bg-zync-100">
+    <div className="px-2 lg:my-4 lg:px-4 p-6 max-w-sm bg-neutral-100 border border-zync-300 rounded-md hover:bg-zync-100">
       <div className="mb-5 bg-neutral-50 rounded-md">
         <Image
           src={homapageImage(domain)}
@@ -57,7 +57,7 @@ const Card = ({ domain }: CardProps) => {
       </div>
       {isActive && (
         <Link href={`http://${domain.domain}`} target="_blank">
-          <h3 className="mb-2 text-xl w-full md:text-2xl font-bold tracking-tight text-blue-950 hover:text-blue-500">
+          <h3 className="mb-2 text-xl w-full md:text-2xl font-bold break-words tracking-tight text-blue-950 hover:text-blue-500">
             {domain.domain}
           </h3>
         </Link>
@@ -90,7 +90,7 @@ const Card = ({ domain }: CardProps) => {
         )}
       </div>
       <div className="flex flex-col gap-2 mt-4">
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-500 break-words">
           <strong>Organização: </strong>
           {domain.organization}
         </span>
@@ -98,7 +98,7 @@ const Card = ({ domain }: CardProps) => {
           <strong>CNPJ: </strong>
           {domain.document}
         </span>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-500 break-words">
           <strong>Responsável: </strong>
           {domain.agent}
         </span>

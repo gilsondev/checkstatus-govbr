@@ -5,7 +5,7 @@ export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
 const GAnalytics = () => {
   return (
-    <div className="container">
+    <div>
       <Script src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}" />
       <Script id="google-analytics">
         {`

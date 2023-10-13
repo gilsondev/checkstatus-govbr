@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 
 Sentry.setTag("app", "Checkstatus Frontend");
-
 const font = Open_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
@@ -54,15 +53,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
-        className={`${font.className} bg-zinc-50 grid grid-cols-1 items-center px-5 md:px-16 pt-8`}
+        className={`${font.className} bg-zinc-50 grid grid-cols-1 items-center px-2 sm:px-5 md:px-16 pt-8`}
       >
         <GAnalytics />
         {children}
