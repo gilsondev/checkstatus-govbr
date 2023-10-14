@@ -61,7 +61,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
       <body
-        className={`${font.className} bg-zinc-50 grid grid-cols-1 items-center px-2 sm:px-5 md:px-16 pt-8`}
+        className={`${font.className} bg-zinc-50 grid grid-cols-1 items-center gap-x-10 px-2 sm:px-5 md:px-16 pt-8`}
       >
         <GAnalytics />
         {children}

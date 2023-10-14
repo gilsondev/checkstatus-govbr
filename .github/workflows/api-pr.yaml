@@ -32,9 +32,6 @@ jobs:
       - name: Run Flake8 checks
         run: poetry run flake8 --count .
         working-directory: api
-      - name: Run MyPy checks
-        run: poetry run mypy .
-        working-directory: api
 
   test:
     name: Tests

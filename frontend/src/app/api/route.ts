@@ -6,10 +6,18 @@ export async function GET(request: NextRequest) {
     Number(searchParams.get("page")) || process.env.PAGINATION_INITIAL_PAGE;
   const size = process.env.PAGINATION_SIZE;
   const search = searchParams.get("search");
+  const available = searchParams.get("available");
+  const status = searchParams.get("status");
 
   let baseUrl = `${process.env.CHECKSTATUS_API_URL}/domains?page=${page}&size=${size}`;
   if (search) {
     baseUrl += `&search=${search}`;
+  }
+  if (available) {
+    baseUrl += `&available=${available}`;
+  }
+  if (status) {
+    baseUrl += `&status=${status}`;
   }
 
   const response = await fetch(baseUrl, {

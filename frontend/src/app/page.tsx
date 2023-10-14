@@ -6,13 +6,17 @@ import DomainProvider from "./context";
 
 import React from "react";
 import Navbar from "@/components/navbar";
+import DomainsFilters from "@/components/domains-filters";
 
 export default function Home() {
   return (
     <DomainProvider>
       <Navbar />
       <Header />
-      <Domains />
+      <div>
+        <DomainsFilters />
+        <Domains />
+      </div>
     </DomainProvider>
   );
 }
