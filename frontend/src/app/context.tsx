@@ -1,18 +1,20 @@
 import React, { createContext } from "react";
-import { DomainsResponse } from "../utils/types";
+import { DomainsResponse, FilterSearch } from "../utils/types";
 import { getData, searchData } from "../utils";
 import { useDebounce } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 
 export type DomainContextType = {
-  getDomains: (page: number) => void;
-  searchDomains: (search: string, page: number) => void;
+  getDomains: (page: number, filters: FilterSearch) => void;
+  searchDomains: (search: string, page: number, filter: FilterSearch) => void;
   setLoading: (isLoading: boolean) => void;
   setPage: (page: number) => void;
   setSearchTerm: (searchTerm: string) => void;
-  searchTerm: string;
-  page: number;
+  setFilter: (filter: FilterSearch) => void;
   isLoading: boolean;
+  page: number;
+  searchTerm: string;
+  filter: FilterSearch;
   domains: DomainsResponse;
 };
 
@@ -30,9 +32,11 @@ export const DomainContext = createContext<DomainContextType>({
   setLoading: () => {},
   setPage: () => {},
   setSearchTerm: () => {},
+  setFilter: () => {},
   page: 1,
   searchTerm: "",
   isLoading: true,
+  filter: { available: "", status: "" },
   domains: defaultDomainsValue,
 });
 
@@ -42,22 +46,30 @@ const DomainProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState<number>(1);
   const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [filter, setFilter] = React.useState<FilterSearch>({
+    available: "",
+    status: "",
+  });
   const [domains, setDomains] =
     React.useState<DomainsResponse>(defaultDomainsValue);
 
   const debounceValue = useDebounce<string>(searchTerm, 500);
 
-  const getDomains = async (page: number = 1) => {
+  const getDomains = async (page: number = 1, filters: FilterSearch) => {
     setLoading(true);
-    const response = await getData(page);
+    const response = await getData(page, filters);
 
     setDomains(response);
     setLoading(false);
   };
 
-  const searchDomains = async (search: string, page: number = 1) => {
+  const searchDomains = async (
+    search: string,
+    page: number = 1,
+    filter: FilterSearch
+  ) => {
     setLoading(true);
-    const response = await searchData(search, page);
+    const response = await searchData(search, page, filter);
 
     setDomains(response);
     setLoading(false);
@@ -65,18 +77,18 @@ const DomainProvider = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(() => {
     if (searchTerm) {
-      searchDomains(searchTerm, page);
+      searchDomains(searchTerm, page, filter);
     } else {
-      getDomains(page);
+      getDomains(page, filter);
     }
-  }, [page]); //eslint-disable-line
+  }, [page, filter]); //eslint-disable-line
 
   React.useEffect(() => {
     if (searchTerm) {
-      searchDomains(searchTerm, page);
+      searchDomains(searchTerm, page, filter);
     } else {
       setPage(1);
-      getDomains(page);
+      getDomains(page, filter);
     }
   }, [debounceValue]); // eslint-disable-line
 
@@ -98,6 +110,8 @@ const DomainProvider = ({ children }: { children: React.ReactNode }) => {
         page,
         setSearchTerm,
         searchTerm,
+        setFilter,
+        filter,
       }}
     >
       {children}

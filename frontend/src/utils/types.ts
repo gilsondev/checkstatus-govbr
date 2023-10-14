@@ -19,3 +19,8 @@ export type DomainsResponse = {
   size: number;
   pages: number;
 };
+
+export type FilterSearch = {
+  available: string;
+  status: string;
+};
