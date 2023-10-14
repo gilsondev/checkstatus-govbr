@@ -9,6 +9,10 @@ from src.core.config import settings
 engine = create_engine(
     settings.DATABASE_URL if not settings.DEBUG else settings.TEST_DATABASE_URL,
     echo=settings.DEBUG,
+    pool_pre_ping=True,
+    pool_size=5,
+    pool_recycle=3600,
+    pool_timeout=30,
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

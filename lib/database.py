@@ -12,7 +12,7 @@ from psycopg2.extras import execute_batch
 def create_connection() -> connection:
     database_url = os.getenv("DATABASE_URL")
     dsn = parse_dsn(database_url)
-    return psycopg2.connect(**dsn)  # noqa
+    return psycopg2.connect(keepalives=1, keepalives_idle=30, keepalives_interval=10, keepalives_count=5, **dsn)  # noqa
 
 
 def create_cursor(conn: connection) -> cursor:
