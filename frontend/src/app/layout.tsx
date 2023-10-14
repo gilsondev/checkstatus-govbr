@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Checkstatus gov.br",
   description:
     "Tenha acesso atualizado aos dados abertos de todos os endereços .gov.br registrados para acesso a sites e plataformas do governo",
-  metadataBase: new URL("https://checkstatus.gilsondev.in"),
+  metadataBase: new URL("https://checkstatusgovbr.org"),
   keywords: [
     "domínios públicos",
     "plataformas do governo",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Checkstatus gov.br",
     description:
       "Acompanhe os domínios públicos registrados e acesse dados abertos de endereços .gov.br.",
-    url: "https://checkstatus.gilsondev.in",
+    url: "https://checkstatusgovbr.org",
     images: [
       {
         url: "./opengraph_image.svg",
