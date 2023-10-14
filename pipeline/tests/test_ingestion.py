@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from lib.database import upsert
+from lib.python.database import upsert
 
 
 def test_upsert(connection, cursor, enrich_domain_df):

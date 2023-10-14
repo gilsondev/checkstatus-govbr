@@ -3,9 +3,9 @@ from unittest import mock
 import pytest
 from src import ingestion
 
-from lib.database import create_connection
-from lib.database import create_cursor
-from lib.database import upsert
+from lib.python.database import create_connection
+from lib.python.database import create_cursor
+from lib.python.database import upsert
 
 
 @mock.patch("lib.database.os.getenv")

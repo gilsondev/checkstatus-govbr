@@ -6,8 +6,8 @@ from loguru import logger
 from psycopg2.extensions import cursor
 from requests import exceptions
 
-from lib.database import fetch_domains
-from lib.database import insert_domain_availability
+from lib.python.database import fetch_domains
+from lib.python.database import insert_domain_availability
 
 
 def check_availability(domain: str) -> bool:
