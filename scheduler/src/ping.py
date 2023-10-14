@@ -13,7 +13,7 @@ from lib.database import insert_domain_availability
 def check_availability(domain: str) -> bool:
     logger.info("Checking domain availability...")
     try:
-        response = requests.head(f"http://{domain}", timeout=5)
+        response = requests.head(f"http://{domain}", timeout=45)
         return response.status_code >= 200 and response.status_code < 400
     except (exceptions.ConnectionError, exceptions.Timeout):
         return False
