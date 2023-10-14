@@ -16,6 +16,10 @@ def test_fetch_domains(db_session, single_domain):
 
 def test_search_domains(db_session, single_domain):
     service = DomainService(db_session)
-    domains = service.search("gdf").all()
+    filters = {
+        "available": None,
+        "status": None,
+    }
+    domains = service.search(filters, search="gdf").all()
 
     assert len(domains) > 0

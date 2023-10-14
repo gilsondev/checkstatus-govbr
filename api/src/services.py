@@ -11,12 +11,12 @@ class DomainService:
         self.db = db
 
     def fetch(self, filters: Optional[dict]) -> Query:
-        query = self.db.query(Domain).order_by(Domain.domain)
+        query = self.db.query(Domain)
 
         query = query.filter(
             or_(Domain.available == filters["available"], filters["available"] is None),
             or_(Domain.status.any(filters["status"]), filters["status"] is None),
-        )
+        ).order_by(Domain.domain)
 
         return query
 
@@ -28,13 +28,12 @@ class DomainService:
         query = self.db.query(Domain)
 
         query = query.filter(
+            or_(
+                Domain.domain.ilike(f"%{search}%"),
+                Domain.organization.ilike(f"%{search}%"),
+            ),
             or_(Domain.available == filters["available"], filters["available"] is None),
             or_(Domain.status.any(filters["status"]), filters["status"] is None),
-        )
-
-        result = query.filter(
-            (Domain.domain.ilike(f"%{search}%"))
-            | (Domain.organization.ilike(f"%{search}%"))
         ).order_by(Domain.domain)
 
-        return result
+        return query
