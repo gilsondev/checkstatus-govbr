@@ -14,7 +14,7 @@ def check_availability(domain: str) -> bool:
     logger.info("Checking domain availability...")
     try:
         response = requests.head(f"http://{domain}", timeout=5)
-        return response.status_code >= 200 and response.status_code < 400
+        return response.status_code >= 200 and response.status_code < 500
     except (exceptions.ConnectionError, exceptions.Timeout):
         return False
 
