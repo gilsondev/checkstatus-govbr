@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Dict
 
 from sqlalchemy import or_
 from sqlalchemy.orm import Query
@@ -10,7 +10,7 @@ class DomainService:
     def __init__(self, db: Session) -> None:
         self.db = db
 
-    def fetch(self, filters: Optional[dict]) -> Query:
+    def fetch(self, filters: Dict[str, str]) -> Query:
         query = self.db.query(Domain)
 
         query = query.filter(
@@ -22,7 +22,7 @@ class DomainService:
 
     def search(
         self,
-        filters: Optional[dict],
+        filters: Dict[str, str],
         search: str = "",
     ) -> Query:
         query = self.db.query(Domain)
