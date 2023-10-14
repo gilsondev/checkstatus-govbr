@@ -3,13 +3,13 @@ import Dropdown from "../dropdown";
 import { DomainContext, DomainContextType } from "@/app/context";
 
 const statusOptions = [
-  { value: "active", label: "Ativos" },
-  { value: "canceled", label: "Cancelados" },
+  { value: "active", label: "Domínios Ativos" },
+  { value: "canceled", label: "Domínios Cancelados" },
 ];
 
 const availabilityOptions = [
-  { value: "true", label: "Disponível" },
-  { value: "false", label: "Indisponível" },
+  { value: "true", label: "Site Disponível" },
+  { value: "false", label: "Site Indisponível" },
 ];
 
 const DomainsFilters = () => {
@@ -24,13 +24,13 @@ const DomainsFilters = () => {
         </span>
         <div className="flex-1 flex items-center w-full gap-2 md:gap-4">
           <Dropdown
-            emptyOption="Por status"
+            emptyOption="Por status do domínio"
             options={statusOptions}
             onChange={(e) => setFilter({ ...filter, status: e.target.value })}
             value={filter.status}
           />
           <Dropdown
-            emptyOption="Por disponibilidade"
+            emptyOption="Por disponibilidade do site"
             options={availabilityOptions}
             onChange={(e) =>
               setFilter({ ...filter, available: e.target.value })
