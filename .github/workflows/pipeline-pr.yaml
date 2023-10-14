@@ -10,7 +10,7 @@ env:
 
 jobs:
   linter:
-    name: Mypy, Black and Flake8 Linters
+    name: Linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
