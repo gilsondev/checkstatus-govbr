@@ -78,7 +78,8 @@ def test_ping_domains_with_exception(
     [
         (200, True),
         (302, True),
-        (404, False),
+        (403, True),
+        (404, True),
         (500, False),
         (503, False),
     ],
