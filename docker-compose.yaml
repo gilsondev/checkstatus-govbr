@@ -2,8 +2,8 @@ version: "3"
 services:
   app:
     build:
-      context: ./api
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: Dockerfile.api
     image: checkstatusgovbr/api
     ports:
       - "8000:8080"
@@ -42,6 +42,7 @@ services:
     command: poetry run alembic upgrade head
     depends_on:
       - db
+
   web:
     build:
       context: ./frontend
@@ -96,6 +97,19 @@ services:
     command: poetry run pytest ./pipeline/tests
     depends_on:
       - alembic
+
+  scheduler:
+    build:
+      context: ./
+      dockerfile: Dockerfile.scheduler
+      target: final
+    image: checkstatusgovbr/scheduler
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/checkstatusgovbr
+    volumes:
+      - ./scheduler:/app/scheduler
+    depends_on:
+      - db
 
   plantuml:
     build:

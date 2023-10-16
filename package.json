@@ -1,0 +1,9 @@
+{
+  "name": "checkstatusgovbr",
+  "private": true,
+  "workspaces": [
+    "shared/*",
+    "frontend",
+    "scheduler"
+  ]
+}

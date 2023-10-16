@@ -9,7 +9,7 @@ RUN apt update && apt upgrade -y
 RUN apt install -y build-essential libpq-dev python3-dev && rm -rf /etc/apt/source/lists/*
 
 WORKDIR /usr/src/app
-COPY . /usr/src/app
+COPY pipeline /usr/src/app
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
