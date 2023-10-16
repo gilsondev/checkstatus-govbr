@@ -23,7 +23,7 @@ jobs:
           pip install -U pip
           pip install poetry
           poetry install
-        working-directory: scheduler
+        working-directory: scheduler_py
         env:
           POETRY_VIRTUALENVS_CREATE: false
       - name: Run Black checks
@@ -31,7 +31,7 @@ jobs:
         working-directory: scheduler
       - name: Run Flake8 checks
         run: poetry run flake8 --count .
-        working-directory: scheduler
+        working-directory: scheduler_py
 
   data-migration:
     name: Run Data Migrations
