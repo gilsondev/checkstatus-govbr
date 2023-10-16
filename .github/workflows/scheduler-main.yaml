@@ -55,7 +55,6 @@ jobs:
           node-version: "20.x"
       - name: Install Dependencies
         run: yarn install
-        working-directory: scheduler
       - name: Execute ping
         run: yarn start ping
         working-directory: scheduler
