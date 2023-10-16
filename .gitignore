@@ -138,5 +138,9 @@ dmypy.json
 .env
 .envrc
 
+# Node
+node_modules/
+*.tsbuildinfo
+
 # Other stuffs
 .DS_Store

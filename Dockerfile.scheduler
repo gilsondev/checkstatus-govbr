@@ -1,0 +1,15 @@
+FROM node:20-alpine AS base
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+COPY shared/database_ts shared/database_ts
+COPY scheduler scheduler
+
+RUN yarn install
+
+FROM base AS final
+
+WORKDIR /app/scheduler
+
+CMD ["yarn", "start"]

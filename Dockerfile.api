@@ -11,7 +11,7 @@ RUN apt install -y build-essential libpq-dev python3-dev && rm -rf /etc/apt/sour
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 WORKDIR /usr/src/app
-COPY . /usr/src/app
+COPY api /usr/src/app
 
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-root

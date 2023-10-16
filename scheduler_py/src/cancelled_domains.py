@@ -7,7 +7,7 @@ from tenacity import retry
 from tenacity import stop_after_attempt
 from tenacity import wait_fixed
 
-from lib.python.database import update_domain_status
+from shared.database_py.database import update_domain_status
 
 CANCELLED_DOMAINS_CSV = "https://www.gov.br/governodigital/pt-br/transformacao-digital/ferramentas/unificacao-de-canais/lista-de-dominios-cancelados.csv"  # noqa
 

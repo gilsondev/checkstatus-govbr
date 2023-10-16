@@ -3,13 +3,13 @@ from unittest import mock
 import pytest
 from src import ingestion
 
-from lib.python.database import create_connection
-from lib.python.database import create_cursor
-from lib.python.database import upsert
+from shared.database_py.database import create_connection
+from shared.database_py.database import create_cursor
+from shared.database_py.database import upsert
 
 
-@mock.patch("lib.database.os.getenv")
-@mock.patch("lib.database.psycopg2")
+@mock.patch("shared.database_py.database.os.getenv")
+@mock.patch("shared.database_py.database.psycopg2")
 def test_connection(mock_pg2, mock_getenv):
     uri = "postgresql://someone@example.com/somedb"
     mock_getenv.return_value = uri
@@ -28,9 +28,9 @@ def test_cursor():
     conn_instance.cursor.assert_called()
 
 
-@mock.patch("lib.database.create_connection")
-@mock.patch("lib.database.create_cursor")
-@mock.patch("lib.database.upsert")
+@mock.patch("shared.database_py.database.create_connection")
+@mock.patch("shared.database_py.database.create_cursor")
+@mock.patch("shared.database_py.database.upsert")
 @pytest.mark.skip("Mock not called for no reason")
 def test_ingestion_data(mock_upsert, mock_cursor, mock_conn, enrich_domain_df):
 
