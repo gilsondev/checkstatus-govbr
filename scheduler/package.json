@@ -1,9 +1,10 @@
 {
   "name": "@checkstatusgovbr/scheduler",
+  "version": "1.0.0",
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest",
-    "build": "tsc --emit"
+    "build": "tsc --noEmit false"
   },
   "dependencies": {
     "axios": "^1.5.1",

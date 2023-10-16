@@ -91,7 +91,8 @@ jobs:
         with:
           node-version: "20.x"
       - name: Install Dependencies
-        run: yarn install
+        run: |
+          yarn install
       - name: Run Tests
         run: yarn test
         working-directory: scheduler
