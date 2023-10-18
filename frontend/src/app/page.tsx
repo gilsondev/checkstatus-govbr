@@ -13,10 +13,8 @@ export default function Home() {
     <DomainProvider>
       <Navbar />
       <Header />
-      <div>
-        <DomainsFilters />
-        <Domains />
-      </div>
+      <DomainsFilters />
+      <Domains />
     </DomainProvider>
   );
 }
