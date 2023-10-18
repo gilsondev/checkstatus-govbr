@@ -4,7 +4,11 @@ export class DatabaseClient {
   client: Client;
 
   constructor() {
-    this.client = new Client(process.env.DATABASE_URL);
+    this.client = new Client({
+      connectionString: process.env.DATABASE_URL,
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 30000,
+    });
     this.client.connect();
   }
 
