@@ -42,16 +42,12 @@ const Domains = () => {
   return (
     <>
       {!isLoading && (
-        <main
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-x-3 mt-10 md:mt-1"
-          id="domains"
-        >
+        <main className="grid grid-cols-1 gap-x-3 mt-10 mx-auto" id="domains">
           <div className="lg:my-2 lg:px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
             {domains?.items?.map((domain) => (
               <Card key={domain.slug} domain={domain} />
             ))}
           </div>
-
           <div className="flex justify-center px-2 md:px-0 py-5">
             <Pagination page={domains.page} totalPages={domains.pages} />
           </div>
