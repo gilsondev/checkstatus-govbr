@@ -12,12 +12,21 @@ export class DatabaseClient {
     this.client.connect();
   }
 
-  async sql<T>(query: string, values: any[]) {
+  async connect() {
+    this.client.connect();
+  }
+
+  async sql<T>(query: string, values: any[]): Promise<T[]> {
     const result = await this.client.query(query, values);
     return result.rows.map((row: T) => row);
   }
 
-  async close() {
-    await this.client.end();
+  async rawSQL<T>(query: string): Promise<T[]> {
+    const result = await this.client.query(query);
+    return result.rows.map((row: T) => row);
+  }
+
+  async close(): Promise<void> {
+    this.client.end();
   }
 }
