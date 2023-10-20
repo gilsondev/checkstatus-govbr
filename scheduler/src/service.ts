@@ -1,5 +1,6 @@
 import { createClient } from "@checkstatusgovbr/database-ts";
 import { DatabaseClient } from "@checkstatusgovbr/database-ts/src/client";
+import chunk from "@checkstatusgovbr/chunk";
 import AvailabilityDomains from "./availability";
 import pino from "pino";
 import { Domain } from "domain";
@@ -39,24 +40,27 @@ export default class AvailabilityDomainsService {
 
   async pingDomains() {
     const domains = await this.fetchDomains();
+    const chunkedDomains = chunk(domains, 50);
 
-    let results: DomainData[] = [];
-    for (const data of domains) {
-      logger.info(`Pinging ${data.domain}`);
-      const isAvailable = await this.pingClient.isAvailable(data.domain);
+    for (const chunk of chunkedDomains) {
+      let results: DomainData[] = [];
+      for (const data of chunk) {
+        logger.info(`Pinging ${data.domain}`);
+        const isAvailable = await this.pingClient.isAvailable(data.domain);
 
-      logger.info(
-        `Domain ${data.domain} is ${
-          isAvailable ? "available" : "not available"
-        }`
-      );
-      results.push({ ...data, available: isAvailable });
+        logger.info(
+          `Domain ${data.domain} is ${
+            isAvailable ? "available" : "not available"
+          }`
+        );
+        results.push({ ...data, available: isAvailable });
+      }
+
+      await this.updateDomainsStatus(results);
     }
-
-    await this.updateDomainsStatus(results);
   }
 
-  public async updateDomainsStatus(domains: DomainData[]) {
+  private async updateDomainsStatus(domains: DomainData[]) {
     const updateValues = domains
       .map((data) => `('${data.domain}', ${data.available}, NOW())`)
       .join(", ");
