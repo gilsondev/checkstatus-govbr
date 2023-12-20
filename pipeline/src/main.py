@@ -1,12 +1,13 @@
 import sentry_sdk
+from cancelled_domains import update_domains as update_cancelled_domains
 from collect_csv import prepare_dataset
 from collect_rdap import collect_domain_rdap_data
 from ingestion import ingestion_data
 from normalize import normalize_data
 from sentry_sdk import set_tag
 
-from shared.database_py import create_connection
-from shared.database_py import create_cursor
+from shared.database_py.database import create_connection
+from shared.database_py.database import create_cursor
 
 sentry_sdk.init(
     dsn="https://011f53de8eea0a53cb44e163d0453eb5@o4506032925900800.ingest.sentry.io/4506032926031872",
@@ -26,6 +27,8 @@ if __name__ == "__main__":
     df = normalize_data(df)  # type: ignore
 
     ingestion_data(df, cursor)
+
+    update_cancelled_domains(cursor)
 
     conn.commit()
     conn.close()

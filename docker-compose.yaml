@@ -29,8 +29,8 @@ services:
 
   alembic:
     build:
-      context: ./api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.api
     image: checkstatusgovbr/db-migration
     ports:
       - "8000:8000"
@@ -58,8 +58,8 @@ services:
 
   alembic-test:
     build:
-      context: ./api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.api
     image: checkstatusgovbr/db-migration
     ports:
       - "8000:8000"

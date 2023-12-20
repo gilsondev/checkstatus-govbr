@@ -1,9 +1,9 @@
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
-from src.cancelled_domains import CANCELLED_DOMAINS_CSV
-from src.cancelled_domains import get_cancelled_domains
-from src.cancelled_domains import update_domains
+from pipeline.src.cancelled_domains import CANCELLED_DOMAINS_CSV
+from pipeline.src.cancelled_domains import get_cancelled_domains
+from pipeline.src.cancelled_domains import update_domains
 
 
 @patch("src.cancelled_domains.get_cancelled_domains")
